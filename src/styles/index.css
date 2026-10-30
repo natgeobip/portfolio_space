@@ -331,6 +331,11 @@ img { display: block; max-width: 100%; }
 /* ---------- schermi grandi (TV 4 m x 2,5 m) ---------- */
 /* --z = fattore di ingrandimento della landing (progettata per 1920 px di larghezza); --logos-h = altezza della striscia clienti. */
 .home { --z: 1; --logos-h: 70px; zoom: var(--z); }
+/* titolo ancorato in basso (a tutte le larghezze), così il satellite al centro/destra non lo copre */
+.home .hero--banner { display: flex; flex-direction: column; }
+.home .hero--banner .navbar, .home .hero--banner .hero__content { width: 100%; }
+.home .hero--banner .hero__content { margin-top: auto; margin-bottom: 0; }
+.home .hero--banner .hero__title { font-size: clamp(2rem, 3.6vw, 3.2rem); }
 @media (min-width: 2400px) { .home { --z: 1.5; } }
 @media (min-width: 3200px) { .home { --z: 2; } }
 @media (min-width: 4800px) { .home { --z: 3; } }
@@ -338,7 +343,8 @@ img { display: block; max-width: 100%; }
    allo schermo e "Get started" porta la pagina completamente alla sezione successiva. */
 @media (min-width: 1600px) {
   .home .hero--banner { --hero-h: calc(100vh / var(--z) - var(--logos-h)); display: flex; flex-direction: column; min-height: 480px; }
-  .home .hero--banner .hero__content { width: 100%; margin: auto; padding-top: 24px; }
+  .home .hero--banner .hero__content { width: 100%; margin: auto auto 0; padding-top: 24px; }
+  .home .hero--banner .hero__title { font-size: clamp(2.4rem, 3.6vw, 3.6rem); }
   .home .hero--banner .hero__content,
   .home .hero--banner .navbar { max-width: min(var(--max), 100%); width: 100%; }
 }

@@ -31,6 +31,7 @@ export default function Home() {
         cta={hero.cta}
         ctaTarget="projects"
         banner={hero.image}
+        satellite={hero.satellite}
       />
 
       <LogoCarousel companies={trusted.companies} />

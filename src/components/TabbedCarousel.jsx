@@ -7,10 +7,11 @@ export default function TabbedCarousel({ slides, arrows = true, className = '' }
   const [index, setIndex] = useState(0)
   const last = slides.length - 1
   const go = (i) => setIndex(Math.min(last, Math.max(0, i)))
+  const single = slides.length < 2
 
   return (
     <div className={`tcarousel ${className}`.trim()}>
-      <div className="tcarousel__tabs" role="tablist">
+      {!single && <div className="tcarousel__tabs" role="tablist">
         {slides.map((s, i) => (
           <button
             key={s.name}
@@ -23,7 +24,7 @@ export default function TabbedCarousel({ slides, arrows = true, className = '' }
             {s.name}
           </button>
         ))}
-      </div>
+      </div>}
 
       <div className="tcarousel__viewport">
         <div className="tcarousel__track" style={{ transform: `translateX(calc(${index} * (-100% - var(--tgap))))` }}>
@@ -33,7 +34,7 @@ export default function TabbedCarousel({ slides, arrows = true, className = '' }
             </div>
           ))}
         </div>
-        {arrows && (
+        {arrows && !single && (
           <>
             <button type="button" className="pcarousel__btn pcarousel__btn--prev" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous">
               <Arrow />
@@ -45,11 +46,13 @@ export default function TabbedCarousel({ slides, arrows = true, className = '' }
         )}
       </div>
 
-      <div className="tcarousel__dots">
-        {slides.map((s, i) => (
-          <button key={s.name} type="button" className={i === index ? 'is-active' : ''} onClick={() => go(i)} aria-label={`Show ${s.name}`} />
-        ))}
-      </div>
+      {!single && (
+        <div className="tcarousel__dots">
+          {slides.map((s, i) => (
+            <button key={s.name} type="button" className={i === index ? 'is-active' : ''} onClick={() => go(i)} aria-label={`Show ${s.name}`} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
