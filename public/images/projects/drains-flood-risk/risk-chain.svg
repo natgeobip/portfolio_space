@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" font-family="Work Sans, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5b6573"/></marker></defs>
+<rect width="1200" height="460" fill="#ffffff"/>
+<text x="40" y="52" font-size="26" font-weight="700" fill="#0b1f3a">Working drains reduce flooding, but do not remove it</text>
+<text x="40" y="80" font-size="15" fill="#5b6573">One map shows where water tends to gather; two storm scenarios compare blocked and working drains</text>
+<rect x="40" y="120" width="230" height="130" rx="10" fill="#f3f4f6" stroke="#d9dde3"/>
+<text x="155" y="170" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430">Territorial factors</text>
+<text x="155" y="196" text-anchor="middle" font-size="14" fill="#1c2430" opacity=".85">Terrain, land cover,</text>
+<text x="155" y="215" text-anchor="middle" font-size="14" fill="#1c2430" opacity=".85">satellite data</text>
+<rect x="340" y="120" width="230" height="130" rx="10" fill="#0b1f3a" stroke="#0b1f3a"/>
+<text x="455" y="170" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Terrain indicators</text>
+<text x="455" y="196" text-anchor="middle" font-size="14" fill="#ffffff" opacity=".85">Topographic Wetness Index</text>
+<text x="455" y="215" text-anchor="middle" font-size="14" fill="#ffffff" opacity=".85">(TWI) and other factors</text>
+<rect x="640" y="120" width="230" height="130" rx="10" fill="#f3f4f6" stroke="#d9dde3"/>
+<text x="755" y="170" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430">Flood risk map</text>
+<text x="755" y="196" text-anchor="middle" font-size="14" fill="#1c2430" opacity=".85">How prone each area</text>
+<text x="755" y="215" text-anchor="middle" font-size="14" fill="#1c2430" opacity=".85">is to flooding</text>
+<rect x="940" y="120" width="220" height="130" rx="10" fill="#e5322d" stroke="#e5322d"/>
+<text x="1050" y="170" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff">Scenario maps</text>
+<text x="1050" y="196" text-anchor="middle" font-size="14" fill="#ffffff" opacity=".85">Compared in the</text>
+<text x="1050" y="215" text-anchor="middle" font-size="14" fill="#ffffff" opacity=".85">web platform</text>
+<line x1="270" y1="185" x2="336" y2="185" stroke="#5b6573" stroke-width="2" marker-end="url(#a)"/>
+<line x1="570" y1="185" x2="636" y2="185" stroke="#5b6573" stroke-width="2" marker-end="url(#a)"/>
+<line x1="870" y1="185" x2="936" y2="185" stroke="#5b6573" stroke-width="2" marker-end="url(#a)"/>
+<rect x="640" y="320" width="240" height="100" rx="10" fill="#ffffff" stroke="#e5322d"/>
+<text x="760" y="364" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430">Blocked drains</text>
+<text x="760" y="390" text-anchor="middle" font-size="14" fill="#1c2430" opacity=".85">More intense flooding</text>
+<rect x="920" y="320" width="240" height="100" rx="10" fill="#ffffff" stroke="#e5322d"/>
+<text x="1040" y="364" text-anchor="middle" font-size="19" font-weight="700" fill="#1c2430">Working drains</text>
+<text x="1040" y="390" text-anchor="middle" font-size="14" fill="#1c2430" opacity=".85">Some areas still flood</text>
+<line x1="760" y1="320" x2="1010" y2="258" stroke="#e5322d" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#a)"/>
+<line x1="1040" y1="320" x2="1065" y2="258" stroke="#e5322d" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#a)"/>
+</svg>

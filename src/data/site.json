@@ -1,0 +1,388 @@
+{
+  "name": "BIP Smart Cities",
+  "hero": {
+    "eyebrow": "Portfolio",
+    "titleLogo": "images/bip_logo.png",
+    "titleLight": "bip.",
+    "titleBold": "& Smart cities: \nSpace, Mobility, AI \ncapabilities",
+    "text": "We make cities smarter: mobility, urban planning and territorial services powered by satellite intelligence, AI for cities and navigation",
+    "cta": "Get started",
+    "image": "images/barcelona_banner.png",
+    "projectImage": "images/satellite_orbit.png",
+    "satellite": "images/satellite.png"
+  },
+  "about": {
+    "eyebrow": "Who we are",
+    "title": "Where smart cities need actionable information",
+    "text": [
+      "The Smart Cities team of Business Integration Partners, part of the Government & Public Services (GPS) business area, brings advanced technologies to cities and mobility. We combine technical expertise with business knowledge to turn satellite data into actionable information for cities and territories.",
+      "Government and Public Services (GPS) is an ecosystem of diverse experiences, all ready today to deliver insights about the territory and, by extension, about Smart Cities. Space applications, AI serving citizens and mobility solutions are cross-cutting enablers, connecting a variety of domains across the Smart Cities paradigm."
+    ],
+    "skills": [
+      {
+        "title": "Urban Analytics",
+        "text": "Spatial analysis and models for cities and territories."
+      },
+      {
+        "title": "Smart Mobility",
+        "text": "Navigation, positioning and transport solutions powered by satellite data."
+      },
+      {
+        "title": "Earth Observation",
+        "text": "Satellite data to monitor the urban environment."
+      },
+      {
+        "title": "City Data Intelligence",
+        "text": "Dashboards and insights for urban decision-making."
+      }
+    ]
+  },
+  "dataSources": {
+    "eyebrow": "Our data",
+    "title": "We start from geospatial data and integrate it with urban and mobility data",
+    "items": [
+      "Aerial photogrammetry",
+      "Georeferenced data",
+      "Spatial data",
+      "Public databases",
+      "Mobility and urban data"
+    ]
+  },
+  "team": {
+    "eyebrow": "Our people",
+    "title": "Meet our teams",
+    "blocks": [
+      {
+        "title": "The people behind the work",
+        "text": "Our team brings together data scientists, mobility specialists and urban analysts. Each project starts from a real question and ends with results that can be verified, reproduced and put to use."
+      },
+      {
+        "title": "Built by people",
+        "text": "Behind every map and model there is a group of curious people who enjoy working across disciplines, sharing what they learn and challenging each other to make data useful for cities and citizens."
+      }
+    ],
+    "teams": [
+      {
+        "name": "Space",
+        "members": [
+          {
+            "name": "Valeria Priori",
+            "focus": "46%",
+            "role": "Consultant",
+            "bio": "EU affairs and project management professional with around five years of experience in EU-funded projects, public affairs and consulting. Her work spans proposal development, programme and PMO coordination, stakeholder engagement and business development, with a strong focus on delivering complex, multi-partner initiatives. She has worked across research, institutional and consulting environments, including a diplomatic setting.",
+            "photo": "images/team/Valeria.png",
+            "linkedin": "https://www.linkedin.com/in/valeria-priori-210b2b15b/"
+          },
+          {
+            "name": "Isabela Saud-Mino",
+            "role": "Consultant",
+            "bio": "Over five years of experience in data analytics and geospatial solutions, spanning consulting, industry and research. Specialised in Earth Observation, land-change detection and time-series forecasting, with a solid track record in business and validation analysis. Skilled in building automated Python pipelines, fusing multi-source data and communicating results to non-technical stakeholders.",
+            "photo": "images/team/isa.png",
+            "linkedin": "https://www.linkedin.com/in/claudiaisabelasaudmino/"
+          },
+          {
+            "name": "Tommaso Soricelli",
+            "role": "Consultant",
+            "bio": "Early-career professional in Machine Learning and predictive modelling, with experience at ENEA and in industry. Focused on forecasting, statistical and neural-network models, and optimisation for critical infrastructures. Multidisciplinary mechanical engineering background with solid Python skills.",
+            "photo": "images/team/Tom.png",
+            "linkedin": "https://www.linkedin.com/in/tommaso-s-a5a496250/"
+          },
+          {
+            "name": "Lucia Savatteri",
+            "role": "Consultant",
+            "bio": "Three years of experience in public-sector consulting, focused on business analysis and PMO. Well versed in project management, tender preparation, security governance and stakeholder management across space, sustainability, transport and aviation. Also active in client training, market analysis and digital communication, and author of a paper presented at IAC 2024.",
+            "photo": "images/team/Luci.png",
+            "linkedin": "https://www.linkedin.com/in/lucia-adele-savatteri-251a99234/"
+          },
+          {
+            "name": "Edoardo Scalia",
+            "role": "Lead Consultant",
+            "bio": "Nearly five years of experience in consulting at BIP and Deloitte, in Italy and the Middle East. Skilled in PMO, budget and risk management, and in reporting for institutional and private clients. Builds VBA-based decision-support tools and portfolio dashboards for large-scale programs.",
+            "photo": "images/team/edoardo.png",
+            "linkedin": "https://www.linkedin.com/in/edoardoscalia/"
+          },
+          {
+            "name": "Irene Tutone",
+            "focus": "58%",
+            "role": "Lead Consultant",
+            "bio": "Nine years of international experience in project and programme management, across space, digital transformation, education and environmental monitoring. Senior PMO consultant at BIP, supporting EUSPA on the Galileo programme in project governance, delivery and contract management. Strong in planning, budget control, risk management and stakeholder coordination, backed by Agile and PRINCE2 Agile certifications. Previously managed a nationally funded education programme in the UK.",
+            "photo": "images/team/irenne.png",
+            "linkedin": "https://www.linkedin.com/in/irene-tutone/"
+          },
+          {
+            "name": "Valerio Valenti",
+            "focus": "56%",
+            "role": "Associate Manager",
+            "bio": "Seven years of experience in strategy and management consulting. Solid background in business analysis, project management and change management, built on complex multi-stakeholder projects that support Digital Transformation programs, Business Process Reengineering and improvement initiatives. Expertise in business transformation, economic and financial evaluation, and the application of Agile methodology.",
+            "photo": "images/team/valerio.png",
+            "linkedin": "https://www.linkedin.com/in/valeriovalenti1995/"
+          },
+          {
+            "name": "Roberto Muscinelli",
+            "role": "Partner & Head of Space",
+            "bio": "Over twenty five years of experience in the space sector, spanning system engineering, bid and project management, and business development for GNSS and downstream applications. Technical leader and design authority for BIP's space solutions, after senior roles at Thales Alenia Space Italia. Extensive work with EUSPA, ESA, the European Commission and ASI on Galileo and EGNOS, with a strong win rate in competitive tenders.",
+            "photo": "images/team/Rob.png",
+            "linkedin": "https://www.linkedin.com/in/roberto-muscinelli-6a6a221bb/",
+            "featured": true
+          },
+          {
+            "name": "Federica Mezzani",
+            "focus": "45%",
+            "role": "Manager",
+            "bio": "More than ten years of experience across research, engineering and consulting, backed by a PhD in Mechanics and international collaborations. Hands-on work in Earth Observation for environmental monitoring, web GIS platforms and system requirements for Galileo and Moonlight. Recipient of international scientific awards, including the L’Oréal-UNESCO “For Women in Science” prize.",
+            "photo": "images/team/Fede.png",
+            "linkedin": "https://www.linkedin.com/in/federica-mezzani-ph-d-33976b44/"
+          },
+          {
+            "name": "Corinne Tamburis",
+            "role": "Lead Consultant",
+            "bio": "Seven years of experience in IT and management consulting, grounded in a scientific background in astrophysics and space systems. Deep knowledge of IT governance, cloud migration, system engineering and requirements management in complex multi-stakeholder programs. Track record in satellite-based services, business models and cost-benefit analysis for institutional and telecom clients.",
+            "photo": "images/team/Corinne.png",
+            "linkedin": "https://www.linkedin.com/in/corinnetamburis/"
+          },
+          {
+            "name": "Beatrice Cascone",
+            "role": "Senior Consultant",
+            "bio": "Over five years of experience in project and contract management within international, multi-stakeholder environments. Strong command of procurement, financial monitoring and risk management for European institutional programs such as EGNOS, in the space and ICT sectors. Known for structured reporting and effective stakeholder coordination.",
+            "photo": "images/team/Bea.png",
+            "linkedin": "https://www.linkedin.com/in/beatrice-cascone-573906196/"
+          },
+          {
+            "name": "Gianluca Benzi",
+            "role": "Consultant",
+            "bio": "Experience in space systems engineering and AI for space, from academic research to consulting. Specialised in GNSS and navigation systems, RF analysis, constellation optimisation and satellite connectivity testing. Skilled in developing Python-based tools and in requirements verification and system validation for international programs.",
+            "photo": "images/team/Gianlu.png",
+            "linkedin": "https://www.linkedin.com/in/gianluca-benzi/"
+          },
+          {
+            "name": "Flavia Castelli",
+            "role": "Consultant",
+            "bio": "Four years of hands-on experience in space propulsion, from university rocketry to industry. Strong skills in the design, simulation and testing of hybrid and green propulsion systems, including CFD and structural analysis. Leadership, project planning and supplier management gained as Head of Propulsion of the Sapienza Rocket Team.",
+            "photo": "images/team/Flavia.png",
+            "linkedin": "https://www.linkedin.com/in/flavia-castelli-a794b4344/"
+          },
+          {
+            "name": "Nataly Sarmiento",
+            "focus": "42%",
+            "role": "Consultant",
+            "bio": "Five years of experience in geospatial analysis and software development, across public institutions and consulting. Strong background in GIS data management and in building QGIS/PyQGIS tools, with a particular ability to turn client needs into functional specifications. Active in space-domain projects for public-sector clients, from requirements analysis to delivery.",
+            "photo": "images/team/Naty.png",
+            "linkedin": "https://www.linkedin.com/in/nasarmientoo/"
+          }
+        ]
+      },
+      {
+        "name": "Mobility",
+        "narrow": true,
+        "members": [
+          {
+            "name": "Giulia Cascone",
+            "focus": "68%",
+            "role": "Senior Manager",
+            "bio": "Transport Engineer and Project Manager with over 10 years of experience managing complex digital transformation projects in public transport and mobility. She has extensive experience supporting public authorities, railway operators, and transport companies in implementing innovative digital solutions, coordinating stakeholders, and driving organizational change.",
+            "photo": "images/team/movility/giulia-cascone-portrait.png",
+            "linkedin": "https://www.linkedin.com/in/giulia-cascone/"
+          },
+          {
+            "name": "Niccolò Silvestri",
+            "role": "Director",
+            "bio": "Director with over 10 years of consulting experience, specializing in governance, delivery and demand management of enterprise Digital Channels and large-scale Digital Transformation programs. Responsible for executive governance, commercial growth, portfolio management and multidisciplinary teams delivering initiatives.",
+            "photo": "images/team/movility/niccolo-silvestri-portrait.png",
+            "linkedin": "https://www.linkedin.com/in/niccol%C3%B2-silvestri-02ab7482/"
+          },
+          {
+            
+            "name": "Giuseppe Costantino",
+            "role": "Partner",
+            "bio": "Partner at BIP with over 20 years of experience in the Transport & Mobility sector, leading complex digital transformation, innovation and strategic advisory programmes for transport operators, railway companies and Public Administrations. He has developed strong expertise in the railway sector, managing strategic relationships and transformation programmes across one of Italy’s leading railway groups.",
+            "photo": "images/team/movility/giuseppe-costantino-portrait.png",
+            "linkedin": "https://www.linkedin.com/in/giuseppe-costantino-b005391/",
+            "featured": true
+          },
+          {
+            "name": "Fabiola Filardo",
+            "role": "Manager",
+            "bio": "Manager at BIP and Transport Engineer with over 7 years of experience in the Transport & Mobility sector, supporting transport operators, Public Administrations and mobility authorities in the digital transformation and innovation programmes. Her expertise focuses on leveraging AI and Big Data and to develop advanced data-driven mobility services.",
+            "photo": "images/team/movility/fabiola-filardo.png",
+            "linkedin": "https://www.linkedin.com/in/fabiola-filardo/"
+          },
+          {
+            "name": "Debora Fanti",
+            "role": "Senior Manager",
+            "bio": "Debora Fanti is a Senior Manager at BIP with 10 years of experience supporting digital and organisational transformation. Her work spans transport, public administration, and energy&utilities, contributing to smarter, more sustainable cities through the evolution of mobility, infrastructure, and public services.",
+            "photo": "images/team/movility/Debora-Fanti.png",
+            "linkedin": "https://www.linkedin.com/in/deborafanti1357"
+          }
+        ]
+      },
+      {
+        "name": "Urban",
+        "members": [
+          {
+            "name": "Leonardo Squarcetti",
+            "role": "Consultant",
+            "bio": "Focused on AI for public administration, currently handling data quality and testing for Julia, Roma Capitale’s AI virtual assistant, from knowledge bases to conversational flows. Also working on process review and redesign for Consip, Italy’s central purchasing body. Background in data science and software development (Python, R, SQL and Java), with previous experience managing complex datasets and data quality controls.",
+            "photo": "images/team/urban/Roma Capitale_Consultant_Leonardo Squarcetti.jpg",
+            "linkedin": "https://www.linkedin.com/in/leonardo-squarcetti/"
+          },
+          {
+            "name": "Daniele Attaccalite",
+            "role": "Manager",
+            "bio": "A career that bridges public administration and digital infrastructure: from coordinating the monitoring of business incentives at Invitalia to leading data centre design projects at Aruba, reporting directly to the CEO. A management engineer by training, he now supports public clients with NRRP-funded data centres for the Department for Digital Transformation and project dashboards for clients.",
+            "photo": "images/team/urban/Roma Capitale_Manager_Daniele Attaccalite.jpg",
+            "linkedin": "https://www.linkedin.com/in/danieleattaccalite/"
+          },
+          {
+            "name": "Dalila Spina",
+            "role": "Lead Consultant",
+            "bio": "Over five years in public-sector governance, with PMO and monitoring programmes for Consip, Ferrari, AgID and the Ministry of Economy and Finance. Combines a background in International Finance and Risk Management with skills in reporting, financial monitoring and data-driven decision making. Currently supporting Roma Capitale on “Roma si Trasforma”, the city-wide urban transformation initiative, through project monitoring, stakeholder coordination and transparency towards citizens.",
+            "photo": "images/team/urban/Roma Capitale_Lead Consultat_ Dalila Spina.jpg",
+            "linkedin": "https://www.linkedin.com/in/spina-dalila/"
+          },
+          {
+            "name": "Rita Scotto d’Apollonia",
+            "role": "Senior Consultant",
+            "bio": "PMO and project governance specialist in public-sector digital transformation, with over six years of consulting experience and an MSc in Innovation and International Management. Currently runs the PMO for an AI-based transformation programme, covering planning, Steering Committees, risks, KPIs and cost control. Designed and delivered training initiatives, driving adoption of new IT solutions.",
+            "photo": "images/team/urban/Roma Capitale_Senior Consultant_Rita Scotto d'Apollonia.png",
+            "linkedin": "https://www.linkedin.com/in/rita-scotto-d-apollonia-63924b198/"
+          },
+          
+          {
+            "name": "Matteo Villani",
+            "role": "Partner",
+            "bio": "Partner in strategy and organisational consulting specialising in public procurement and strategic planning for public bodies. A decade of hands-on work with Consip, Italy’s central purchasing body, including support for its Industrial Plan, plus programmes for Roma Capitale and the Regione Lazio. Leads a team of over 50 consultants and has brought in new public-sector clients such as the Ministry of Economy and Finance, Invitalia and AgID.",
+            "photo": "images/team/urban/Roma Capitale_Partner_ Matteo Villani.png",
+            "linkedin": "https://www.linkedin.com/in/matteo-villani-b5777a55/",
+            "featured": true
+          },
+          {
+            "name": "Domenico Terracciano",
+            "role": "Senior Director",
+            "bio": "Nearly fifteen years of experience in consulting, programme and portfolio management, with a strong focus on public administration and National Recovery and Resilience Plan initiatives, backed by an MSc in Space Engineering. Hands-on leadership of digital transformation programmes for major public sector clients, including the Italian Prime Minister’s Office, the Ministry of Justice, Consip and Roma Capitale, plus studies for the European Commission. PMP, TOGAF 9 and ITIL 4 certified, with expertise in PM², the European Commission’s project management methodology.",
+            "photo": "images/team/urban/Roma Capitale_Senior Director_ Domenico Terracciano.jpg",
+            "linkedin": "https://www.linkedin.com/in/domenico-terracciano-a511b0b4/"
+          },
+          {
+            "name": "Federica Pereira Alves",
+            "role": "Lead Consultant",
+            "bio": "Management consultant with experience in strategy, business and digital transformation initiatives across public sector such as Roma Capitale, Consip, AgID and financial services organizations. Proven track record in strategic advisory, PMO and programme governance, market assessments, business transformation programmes, and large-scale digital initiatives. Professional Scrum Master™ I (PSM I) certified.",
+            "photo": "images/team/urban/Roma Capitale_Lead Consultant_Federica Pereira Alves.jpg",
+            "linkedin": "https://www.linkedin.com/in/federica-pereira-alves/"
+          },
+          {
+            "name": "Sara Frau",
+            "role": "Assistant Manager",
+            "bio": "At the interface between business and technical teams, with over ten years in project management, PMO, business and functional analysis for complex, multi-stakeholder programmes. Skilled in requirements analysis, process reengineering, feasibility studies, testing and risk management, using Agile methods (Scrum, Azure DevOps). Clients include Anas, Roma Capitale, Consip, EFSA and ARIA (Regione Lombardia), spanning public administration, infrastructure and European initiatives.",
+            "linkedin": "https://www.linkedin.com/in/sara-frau-5069a9a7/"
+          },
+          {
+            "name": "Alessio Centrella",
+            "role": "Consultant",
+            "bio": "Brings data analysis and management skills to digital innovation projects for public administration, with an MSc in Economics and Management earned with top honours. Helped design and pilot an AI agent for a public-sector project and prepares the analyses and proposals that support client decisions. Winner of the 2025 SIM Marketing Award and of a Best Project Award at the ASviS Sustainable Development Festival.",
+            "photo": "images/team/urban/Roma Capitale_Consultant_Alessio Centrella.png",
+            "linkedin": "https://www.linkedin.com/in/alessio-centrella-b6a295290/"
+          }
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Our work",
+    "title": "Projects"
+  },
+  "trusted": {
+    "companies": [
+      {
+        "name": "Reggio Calabria",
+        "logo": "images/companies/reggio_calabria.png",
+        "height": 44
+      },
+      {
+        "name": "Dipartimento per la Trasformazione Digitale",
+        "logo": "images/companies/transformazione.png"
+      },
+      {
+        "name": "European Central Bank",
+        "logo": "images/companies/banco_central.png",
+        "height": 40
+      },
+      {
+        "name": "Agenzia Spaziale Italiana",
+        "logo": "images/companies/asi_logo.png",
+        "height": 44
+      },
+      {
+        "name": "Regione Veneto",
+        "logo": "images/companies/veneto_logo.png",
+        "height": 44
+      },
+      {
+        "name": "IRIDE",
+        "logo": "images/companies/iride_logo.png"
+      },
+      {
+        "name": "ARPA",
+        "logo": "images/companies/arpa.png"
+      },
+      {
+        "name": "ROMA",
+        "logo": "images/companies/roma.png",
+        "height": 50
+      },
+      {
+        "name": "AMA",
+        "logo": "images/companies/AMA_logo.png"
+      },
+      {
+        "name": "Città Metropolitana di Reggio Calabria",
+        "logo": "images/companies/Logo-CMRC.png",
+        "height": 50
+      },
+      {
+        "name": "ARIA",
+        "logo": "images/companies/Logo_ARIA.png"
+      },
+      {
+        "name": "ANAS",
+        "logo": "images/companies/Logo_Anas.png"
+      },
+      {
+        "name": "Doha Municipality",
+        "logo": "images/companies/Logo_Doha.png"
+      },
+      {
+        "name": "Regione Calabria",
+        "logo": "images/companies/Logo_Regione_Calabria.png"
+      },
+      {
+        "name": "Regione Lombardia",
+        "logo": "images/companies/Logo_Regione_Lombardia.png"
+      },
+      {
+        "name": "Trenitalia",
+        "logo": "images/companies/Logo_TRI.png"
+      }
+    ]
+  },
+  "footer": {
+    "eyebrow": "Find us here",
+    "titleLight": "Let's shape",
+    "titleBold": "the next frontier together",
+    "cta": "Let's get in touch",
+    "ctaHref": "mailto:space@example.com",
+    "links": [
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/"
+      },
+      {
+        "label": "Instagram",
+        "href": "https://www.instagram.com/"
+      },
+      {
+        "label": "Website",
+        "href": "https://www.bip-group.com/industries/space"
+      }
+    ]
+  }
+}

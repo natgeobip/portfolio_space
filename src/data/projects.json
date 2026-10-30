@@ -1,0 +1,3463 @@
+[
+  {
+    "slug": "air-quality-estimation",
+    "titleLight": "",
+    "titleBold": "AirSense",
+    "subtitle": "Ground-Level Air Quality Intelligence",
+    "summary": "A workflow that combines Sentinel-5P satellite data with ERA5 meteorology to map ground-level NO₂, O₃, PM10 and PM2.5 over Lombardy.",
+    "tags": [
+      "Sentinel-5P",
+      "ERA5",
+      "Air Quality",
+      "Regression"
+    ],
+    "image": "images/projects/thumbnails/airsense.png",
+    "heroText": "From satellite columns to ground-level concentrations of NO₂, O₃, PM10 and PM2.5 over Lombardy, ready for hourly prediction with Sentinel-4.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "The product turns satellite column measurements into daily air-quality maps at the surface, for 1,244 points covering the whole region, and is built to move to hourly prediction when Sentinel-4 becomes operational. It estimates ground-level concentrations of four pollutants by linking satellite observations, meteorology and reference air-quality data.",
+      "stats": [
+        {
+          "value": "1,244",
+          "label": "Grid points over Lombardy"
+        },
+        {
+          "value": "500 m",
+          "label": "Target resolution"
+        },
+        {
+          "value": "4",
+          "label": "Pollutants: NO₂, O₃, PM10, PM2.5"
+        },
+        {
+          "value": "8",
+          "label": "Models (4 pollutants × 2 targets)"
+        }
+      ],
+      "meta": {
+        "Area": "Lombardy, Northern Italy",
+        "Period": "2025, with a test on H1 2026",
+        "Data": "Sentinel-5P, ERA5, CAMS, ARPA",
+        "Output": "Daily maps and quality layers"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Satellites see a column, people breathe at ground level",
+        "text": "Satellites measure the atmosphere as a vertical column, while health and policy decisions depend on what people breathe at ground level. Ground stations measure that directly, but they are sparse and unevenly distributed."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Satellite, weather and reference data",
+        "text": "Sentinel-5P (TROPOMI) tropospheric NO₂, O₃, SO₂, HCHO and UV aerosol index, ERA5 meteorology, CAMS and ARPA Lombardia reference maps, plus elevation, emissions and land use."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "One regression per pollutant and target",
+        "text": "For each pollutant, one satellite indicator is smoothed over the previous days and combined with five meteorological variables in a multiple regression. The same structure is applied to the CAMS and ARPA references, giving eight models."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Sentinel-5P",
+          "text": "Tropospheric NO₂, O₃, SO₂, HCHO and UV aerosol index, from the Copernicus Data Space."
+        },
+        {
+          "name": "ERA5",
+          "text": "Temperature, wind, boundary layer height, precipitation and solar radiation."
+        },
+        {
+          "name": "CAMS and ARPA Lombardia",
+          "text": "CAMS modelled air quality and the ARPA 1 × 1 km assimilated maps, used as reference targets."
+        },
+        {
+          "name": "Static layers",
+          "text": "Elevation (DEM), emission maps and land use."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "Daily maps of estimated NO₂, O₃, PM10 and PM2.5 concentrations for 2025, with monthly and yearly summaries.",
+        "Residual maps that show where the estimate departs from the reference.",
+        "Coverage and quality layers that show where and when an estimate is available and how reliable it is."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "Satellite, meteorological and reference data are downloaded for the same period with a single script, reprojected and resampled to a 500 m grid, and sampled at the 1,244 points. For each pollutant, one satellite indicator is selected, smoothed over the previous days, and combined with five meteorological variables in a multiple regression. The models are checked with a time-based validation and then re-fitted on the full year to produce the maps.",
+        "The choice of satellite indicators comes from a correlation analysis. NO₂ is the clearest signal, ozone moves in the opposite direction to NO₂, and particulate matter is the hardest to capture from space."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/air-quality-estimation/workflow.png",
+          "caption": "Inputs, processing and outputs of the workflow."
+        },
+        {
+          "image": "images/projects/air-quality-estimation/correlation.png",
+          "caption": "Figure 1. Correlation between pollutants (CAMS), Sentinel-5P indicators and wind, on daily data."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/air-quality-estimation/monthly-no2.png",
+        "caption": "Figure 2. Monthly mean NO₂ estimated by the model (2025). It shows the winter build-up over the Po plain and the Milan area, much lower values in the alpine north, and the minimum in the summer months. Labels are in Italian."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Coverage",
+          "image": "images/projects/air-quality-estimation/coverage.png",
+          "caption": "Figure 3. Share of days with an estimate at each point (2025). Gaps depend on satellite availability."
+        },
+        {
+          "title": "Model quality",
+          "image": "images/projects/air-quality-estimation/model-quality.png",
+          "caption": "Figure 4. Out-of-sample estimates against the ARPA reference, with residuals. The estimates reproduce the general level and the seasonal pattern, and are less accurate for peaks and local extremes."
+        },
+        {
+          "title": "Spatial errors",
+          "image": "images/projects/air-quality-estimation/pm10-errors.png",
+          "caption": "Figure 5. PM10: spatial summary of the errors (bias, MAE, correlation and valid days per point, 2025)."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Spatial pattern",
+          "text": "NO₂ concentrates in the Po plain and around Milan, with a strong winter peak."
+        },
+        {
+          "title": "Best performance",
+          "text": "Ozone, followed by NO₂. PM10 is the hardest to capture and remains a baseline."
+        },
+        {
+          "title": "Regression to the mean",
+          "text": "The model tends to pull values toward the mean, so very high and very low concentrations are less well captured."
+        },
+        {
+          "title": "Errors vary in space",
+          "text": "In the PM10 example the bias is negative in the alpine north and close to zero in the plain, and the temporal correlation is highest around the Milan area."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "1,244",
+          "label": "Points covered over Lombardy"
+        },
+        {
+          "value": "365",
+          "label": "Days mapped in 2025"
+        },
+        {
+          "value": "91–95%",
+          "label": "Days with an estimate at each point"
+        },
+        {
+          "value": "Ozone",
+          "label": "Best performance, followed by NO₂"
+        }
+      ]
+    },
+    "limits": {
+      "title": "",
+      "items": [
+        "The estimates are validated against CAMS and ARPA assimilated maps, not directly against ground stations."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Validation against ARPA for 2026, spatial validation on new points, extra covariates (elevation, land use, emissions) and positive-only models.",
+        "Hourly prediction by integrating Sentinel-4 once operational."
+      ]
+    },
+    "group": "Space"
+  },
+  {
+    "slug": "vegetation-loss-construction-detection",
+    "titleLight": "",
+    "titleBold": "LandShift",
+    "subtitle": "Urban Growth & Farmland Monitoring",
+    "summary": "Land-cover change from Sentinel-2 to track urban growth and farmland loss around Iasi, Romania for economic activity monitoring and urban planning.",
+    "tags": [
+      "Google Earth Engine",
+      "Sentinel-2",
+      "Spectral Indices",
+      "Change Detection"
+    ],
+    "image": "images/projects/thumbnails/landshift.png",
+    "heroText": "Land-cover change from Sentinel-2 to track urban growth and farmland loss around Iasi, Romania.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "Cities grow onto farmland, and the loss is slow, spread out and easy to miss. This project measures it with public satellite images, so the answer is objective and can be repeated every year. It asks how much the built-up area has grown, how much farmland was lost and what it became, and whether farmland at risk can be spotted before construction starts.",
+      "stats": [
+        {
+          "value": "10 m",
+          "label": "Sentinel-2 resolution"
+        },
+        {
+          "value": "6",
+          "label": "Study years, 2017 to 2026"
+        },
+        {
+          "value": "10",
+          "label": "Spectral indices computed"
+        },
+        {
+          "value": "5",
+          "label": "Land-cover classes"
+        }
+      ],
+      "meta": {
+        "Area": "Iasi, Romania",
+        "Period": "2017 to 2026",
+        "Data": "Sentinel-2 Level-2A",
+        "Method": "Threshold rules on spectral indices"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Farmland loss is slow and easy to miss",
+        "text": "Urban growth eats into farmland gradually and across many small places. The project needs an objective, repeatable measure of how much was lost and what it became."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Summer composites from Sentinel-2",
+        "text": "June to August composites at 10 m through Google Earth Engine, with cloudy scenes excluded and remaining clouds, shadows and cirrus masked. Ten spectral indices for vegetation, built-up surfaces, bare soil and water."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Classify each year, then compare",
+        "text": "Threshold rules assign each pixel to a land-cover class. Area per class is tracked over time, a transition matrix compares the first and last year, and index differences show how strong the change is."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Sentinel-2 Level-2A",
+          "text": "Surface reflectance at 10 m through Google Earth Engine. June to August composites, scenes over 20% cloud excluded, and remaining clouds, shadows and cirrus masked with the SCL band."
+        },
+        {
+          "name": "Study years",
+          "text": "2017, 2019, 2021, 2023, 2025 and 2026, configurable."
+        },
+        {
+          "name": "Reference data",
+          "text": "None yet. Points from high-resolution images or official land-use data are planned for a supervised classifier."
+        }
+      ],
+      "deliverablesTitle": "What the project delivers",
+      "deliverables": [
+        "Tables as CSV and charts as PNG.",
+        "An interactive map with one layer per year.",
+        "Optional GeoTIFF exports to Google Drive."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "The study area is the city of Iasi and the surrounding farmland and periurban area, defined as a configurable rectangle. The official county boundary can be used instead."
+      ],
+      "steps": [
+        {
+          "title": "1. Acquire and composite images",
+          "text": "For each year, summer scenes are filtered and masked, then combined into a median image that is more robust than a single scene."
+        },
+        {
+          "title": "2. Compute ten spectral indices",
+          "text": "NDVI, SAVI, MSAVI2, EVI and LAI for vegetation, NDBI and IBI for built-up surfaces, BSI for bare soil, and NDWI and MNDWI for water."
+        },
+        {
+          "title": "3. Classify land cover",
+          "text": "Threshold rules assign each pixel to water, agriculture and vegetation, urban, bare soil or unclassified, in that order of priority."
+        },
+        {
+          "title": "4. Detect change",
+          "text": "Area per class is tracked over time, a transition matrix compares the first and last year, and index differences show how strong the change is."
+        },
+        {
+          "title": "5. Export results",
+          "text": "Tables as CSV, charts as PNG, an interactive map with one layer per year, and optional GeoTIFF exports to Google Drive."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/vegetation-loss-construction-detection/land-cover-maps.png",
+        "caption": "Figure 1. Land-cover maps for the first and the last year."
+      },
+      "charts": [
+        {
+          "title": "Area per class",
+          "image": "images/projects/vegetation-loss-construction-detection/area-per-class.png",
+          "caption": "Figure 2. Area per class over time."
+        },
+        {
+          "title": "Transition matrix",
+          "image": "images/projects/vegetation-loss-construction-detection/transition-matrix.png",
+          "caption": "Figure 3. Transition matrix heat map."
+        }
+      ],
+      "gallery": []
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "10–20 m",
+          "label": "Spatial resolution"
+        },
+        {
+          "value": "2017–2026",
+          "label": "About every two years"
+        },
+        {
+          "value": "5",
+          "label": "Water, agriculture and vegetation, urban, bare soil, unclassified"
+        },
+        {
+          "value": "Threshold rules",
+          "label": "On spectral indices, no trained model yet",
+          "small": true
+        }
+      ]
+    },
+    "limits": {
+      "title": "Next Steps",
+      "items": [
+        "Thresholds need calibration against real images before the numbers can be trusted.",
+        "Freshly ploughed land can meet both the bare soil and the urban rules, and urban wins for now. The multi-year series is what separates the two, because ploughed land turns green again.",
+        "IBI is computed but not used in the classification yet, because it is numerically unstable on water pixels."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "A supervised Random Forest classifier.",
+        "A cross-check with cadastral data.",
+        "A dedicated plugin."
+      ]
+    },
+    "group": "Space"
+  },
+  {
+    "slug": "green-detector",
+    "titleLight": "",
+    "titleBold": "GreenMap",
+    "subtitle": "Urban Green Cover Mapping",
+    "summary": "A QGIS-based machine-learning workflow for hierarchical urban green-cover mapping from Sentinel-2 data.",
+    "tags": [
+      "QGIS Plugin",
+      "Sentinel-2",
+      "XGBoost",
+      "Land Cover"
+    ],
+    "image": "images/projects/thumbnails/greenmap.png",
+    "heroText": "Sentinel-2 imagery, terrain predictors and multi-source reference labels turned into a four-class green-cover map with probability, uncertainty and confidence.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "Urban green cover supports climate adaptation, biodiversity, environmental quality and planning. Green Detector is a QGIS plugin that builds a 10 m Sentinel-2 predictor stack, trains a hierarchical classifier that first separates green from non-green surfaces and then tells agricultural, forest and shrub-and-herbaceous vegetation apart, and delivers a four-class map together with probability, uncertainty and confidence layers.",
+      "stats": [
+        {
+          "value": "67.03%",
+          "label": "Green cover mapped"
+        },
+        {
+          "value": "3,182 km²",
+          "label": "Metropolitan City of Reggio Calabria"
+        },
+        {
+          "value": "10 m",
+          "label": "Sentinel-2 resolution"
+        },
+        {
+          "value": "4",
+          "label": "Classes in the final map"
+        }
+      ],
+      "meta": {
+        "Area": "Metropolitan City of Reggio Calabria, Italy",
+        "Image date": "Sentinel-2 L2A, 4 June 2025",
+        "Models": "XGBoost, binary and vegetation type",
+        "Output": "QGIS plugin, four-class map and confidence"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Reproducible green mapping with uncertainty",
+        "text": "Mapping urban green cover with satellites is well established, but operational workflows often lack reproducibility, an assessment of uncertainty, and a direct link to geographic information systems."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Sentinel-2, terrain and reference labels",
+        "text": "A 10 m Sentinel-2 predictor stack with elevation and slope, trained on vegetation, bare-soil, building, road and water references over 97 municipalities with a sharp gradient from the coast to the mountains."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "A hierarchical classifier",
+        "text": "First separate green from non-green surfaces, then tell vegetation types apart. Filtering the vegetation-type result with the green decision removes buildings and roads labelled as vegetation, and extra layers show where a prediction is weakly supported."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Sentinel-2 Level-2A",
+          "text": "Two adjacent tiles from the same acquisition of 4 June 2025. Bands B02, B03, B04 and B08 at their native 10 m; B11 and B12 resampled from 20 m to 10 m. The scene classification layer supplies the water reference."
+        },
+        {
+          "name": "Digital elevation model",
+          "text": "10 m DEM aligned to the Sentinel-2 grid. Slope is computed in degrees with the Zevenbergen-Thorne algorithm."
+        },
+        {
+          "name": "Administrative boundary",
+          "text": "Official ISTAT boundary of the Metropolitan City, rasterized on the 10 m grid: 31,819,826 pixels."
+        },
+        {
+          "name": "Vegetation references",
+          "text": "Polygons for agricultural vegetation (903), forest vegetation (229) and shrub and herbaceous vegetation (331), plus 6,643 auxiliary green labels derived with AI."
+        },
+        {
+          "name": "Non-green references",
+          "text": "Bare-soil polygons (1,722), urban non-green polygons (120), OpenStreetMap building footprints (163,483), buffered road polygons (33,659) and water pixels from the scene classification layer."
+        }
+      ],
+      "deliverablesTitle": "What the plugin produces",
+      "deliverables": [
+        "Binary green and non-green classification, with a green-cover probability and a binary uncertainty layer.",
+        "Three-class vegetation-type map, with class probabilities, maximum class probability and normalised predictive entropy.",
+        "Final four-class map: non-green, agricultural, forest, and shrub and herbaceous vegetation.",
+        "Hierarchical confidence layer that combines the support of both models."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "The hierarchy matters because a model trained only on vegetation classes labels every pixel as some kind of vegetation, buildings and roads included. Filtering the vegetation-type result with the green/non-green decision removes that error. The extra layers show where a prediction is weakly supported, so the class map is not read as more certain than it is.",
+        "Green Detector is organized in tabs that match the processing modules: data preparation, feature construction, dataset generation, model training, prediction, post-processing, quality control and transferability. Each stage can be run and checked on its own, and trained models and scaling settings are stored apart from the interface. The finished workflow was also applied, without retraining, to Villa Borghese, a historic urban park of about 135 ha in Rome, to test how well it transfers to a very different landscape."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/green-detector/summary.png",
+          "caption": "Problem, approach and impact at a glance."
+        },
+        {
+          "image": "images/projects/green-detector/study-area.png",
+          "caption": "Figure 1. Study area, hierarchical classification and workflow. (A) Official ISTAT area of interest and raster-grid characteristics. (B) Final hierarchical classification and class proportions. (C) The workflow from data preparation to hierarchical prediction and transferability assessment."
+        },
+        {
+          "image": "images/projects/green-detector/labels.png",
+          "caption": "Figure 2. Spatial distribution of the training-label inventory used for the binary and vegetation-type models."
+        },
+        {
+          "image": "images/projects/green-detector/workflow.png",
+          "caption": "Figure 3. End-to-end processing and transferability workflow, from Sentinel-2 imagery, terrain and reference labels to the four-class product and the external application."
+        },
+        {
+          "image": "images/projects/green-detector/plugin-ui.png",
+          "caption": "Figure 4. Green Detector plugin interface and processing controls."
+        },
+        {
+          "image": "images/projects/green-detector/architecture.png",
+          "caption": "Figure 5. Architecture of the plugin: the entry point coordinates preprocessing, modelling, prediction, post-processing and transferability modules, with the interface in Qt forms, pretrained models and QGIS styles in their own packages."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/green-detector/outputs.png",
+        "caption": "Figure 7. Main outputs over the whole area: (A) final hierarchical classification, (B) green-cover probability, (C) hierarchical confidence."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Model performance",
+          "image": "images/projects/green-detector/metrics.png",
+          "caption": "Figure 6. Confusion matrices and performance metrics of the selected models. (A) Binary XGBoost. (B) Vegetation-type XGBoost. (C) Summary metrics on the spatially independent test sets."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Green cover",
+          "text": "67.03% of the area, 21,328,259 pixels out of 31,819,790 valid pixels at 10 m."
+        },
+        {
+          "title": "Binary model",
+          "text": "XGBoost with macro F1 0.772, ROC AUC 0.857 and log loss 0.470."
+        },
+        {
+          "title": "Vegetation-type model",
+          "text": "XGBoost with macro F1 0.705 and accuracy 0.704. Class F1: agricultural 0.756, forest 0.743, shrub and herbaceous 0.614."
+        },
+        {
+          "title": "Spatially independent validation",
+          "text": "Spatial blocks of about 1 km with 20% held out and no block shared between training and test. Mean hierarchical confidence is 0.646."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "67.03%",
+          "label": "Green cover across 3,181.98 km²"
+        },
+        {
+          "value": "0.772",
+          "label": "Macro F1, binary model"
+        },
+        {
+          "value": "0.705",
+          "label": "Macro F1, vegetation-type model"
+        },
+        {
+          "value": "0.646",
+          "label": "Mean hierarchical confidence"
+        }
+      ]
+    },
+    "group": "Space"
+  },
+  {
+    "slug": "urban-heat-index",
+    "titleLight": "",
+    "titleBold": "HeatLens",
+    "subtitle": "Urban Heat & Resilience Assessment",
+    "summary": "A 36-month satellite assessment of relative surface heat, land-cover dynamics and intervention opportunities in Reggio Calabria.",
+    "tags": [
+      "Sentinel-2",
+      "LST Proxy",
+      "Heat Risk",
+      "Time Series"
+    ],
+    "image": "images/projects/thumbnails/heatlens.png",
+    "heroText": "Six complementary indicators from monthly Sentinel-2 composites show where relative heat pressure persists, when it intensifies, and which surfaces drive it.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "Heat pressure is shaped by a coupled land-surface system rather than by isolated variables. Vegetation, moisture, built-up intensity and exposed soil interact over time and together determine relative heat intensity. The analysis converts satellite observations into decision-ready information for heat mitigation, urban resilience and asset protection.",
+      "stats": [
+        {
+          "value": "36",
+          "label": "Monthly observations"
+        },
+        {
+          "value": "6",
+          "label": "Complementary indicators"
+        },
+        {
+          "value": "7.62",
+          "label": "Mean LST proxy"
+        },
+        {
+          "value": "Aug 2024",
+          "label": "Peak heat pressure"
+        }
+      ],
+      "meta": {
+        "Area": "Reggio Calabria, Italy",
+        "Window": "March 2023 to March 2026",
+        "Source": "Sentinel-2 L2A monthly composites",
+        "Output": "Maps, trend analytics, risk signals"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Where and when does heat pressure persist?",
+        "text": "Cooling actions need to be targeted. That means detecting where and when surface shifts occur, then diagnosing the dominant drivers and prioritizing persistent hotspots."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Six indicators from monthly Sentinel-2",
+        "text": "Monthly Sentinel-2 L2A composites with cloud masking (QA60 and SCL) and median compositing, turned into NDVI, NDWI, NDBI, BSI, emissivity and an LST proxy."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "From signal to priorities",
+        "text": "Quality control, temporal normalization, indicator engineering, and spatial and temporal analytics. Interventions are then monitored through NDVI and emissivity gains and a lower LST proxy."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Sentinel-2 L2A",
+          "text": "Monthly composites covering March 2023 to March 2026, from the Copernicus Sentinel-2 Level-2A archive."
+        },
+        {
+          "name": "Cloud and quality masking",
+          "text": "QA60 cloud masking, plus the scene classification layer (SCL) to remove contaminated observations."
+        },
+        {
+          "name": "Temporal normalization",
+          "text": "Monthly median compositing, for stable month-to-month comparability."
+        },
+        {
+          "name": "Indicators",
+          "text": "NDVI, NDWI, NDBI, BSI, emissivity and LST proxy."
+        }
+      ],
+      "deliverablesTitle": "What the analysis produces",
+      "deliverables": [
+        "Maps of the monthly indicators and of the LST proxy over the whole area of interest.",
+        "AOI-wide monthly trend analytics for the 36-month period.",
+        "Hotspot geography: persistent hotspot clusters, cooler belts and transition zones.",
+        "Risk signals and a seasonal calendar for timing preventive interventions.",
+        "An interactive map to explore the full 36-month dataset."
+      ]
+    },
+    "methods": {
+      "title": "Building a reliable heat-risk signal",
+      "text": [
+        "Clouds and scene-to-scene variability were minimized first, so that the trends observed are more likely to reflect real surface behavior than data artifacts. The cleaned observations were then translated into six complementary indicators that track how vegetation, moisture, built-up intensity and exposed soil interact through time.",
+        "Relative heat intensity rises when vegetative cooling weakens and exposed urban surfaces dominate: higher NDBI, higher BSI, lower NDVI, lower NDWI and the emissivity signal combine into a higher LST proxy. The LST proxy is a relative heat-pressure index, not a direct temperature measurement: it supports comparison between places and months, not absolute temperature values."
+      ],
+      "steps": [
+        {
+          "title": "NDVI",
+          "text": "Vegetation cooling capacity."
+        },
+        {
+          "title": "NDWI",
+          "text": "Surface moisture behavior."
+        },
+        {
+          "title": "NDBI",
+          "text": "Built-up dominance."
+        },
+        {
+          "title": "BSI",
+          "text": "Prevalence of bare and exposed surfaces."
+        },
+        {
+          "title": "Emissivity",
+          "text": "Surface radiative behavior linked to vegetation fraction."
+        },
+        {
+          "title": "LST proxy",
+          "text": "Relative heat-pressure index."
+        }
+      ],
+      "figures": [
+        {
+          "image": "images/projects/urban-heat-index/cover.jpg",
+          "caption": "Urban Surface Heat Intelligence: area of interest, study window, source, scope and outputs."
+        },
+        {
+          "image": "images/projects/urban-heat-index/workflow.jpg",
+          "caption": "Figure 1. Workflow: quality control, temporal normalization, indicator engineering, and spatial and temporal analytics."
+        },
+        {
+          "image": "images/projects/urban-heat-index/indicators.jpg",
+          "caption": "Figure 2. Indicator interpretation panel and how the indicators combine into a higher LST proxy."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/urban-heat-index/hotspots.jpg",
+        "caption": "Figure 3. Hotspot persistence: LST proxy for March 2023 and March 2026 next to NDVI, NDBI and BSI."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Seasonal cycle",
+          "image": "images/projects/urban-heat-index/seasonal-cycle.jpg",
+          "caption": "Figure 4. Seasonal cycle of the indices and the LST proxy over 36 months, with the heat-pressure phase (1, August 2024) and cooling phase (2, January 2025)."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "The seasonal cycle dominates",
+          "text": "The LST proxy peaks in summer (August 2023 and August 2024, plus October 2025) and reaches its minimum in winter (January 2025). The area follows a repeatable seasonal surface-behavior cycle."
+        },
+        {
+          "title": "Index extremes coincide with LST extremes",
+          "text": "In August 2024 the LST maximum coincides with the NDBI and BSI maxima. In January 2025 the LST minimum coincides with the NDVI maximum. More vegetation goes with less relative heat, and more built-up or dry surface with more heat."
+        },
+        {
+          "title": "The cycle has two phases",
+          "text": "In the heat-pressure phase NDBI and BSI rise while NDVI and emissivity soften. In the cooling phase NDVI and emissivity recover while heat pressure declines. The NDVI minimum falls in October 2025 rather than in summer, which suggests water stress accumulated after the summer."
+        },
+        {
+          "title": "Hotspots are geographically stable",
+          "text": "The same zones stay hot in March 2023 and March 2026, with low NDVI and high NDBI and BSI, while cooler belts keep higher NDVI and emissivity. Transition zones show mixed signatures with seasonal sensitivity."
+        },
+        {
+          "title": "Emissivity and NDWI add little",
+          "text": "Emissivity is almost constant and does not explain the variation of the LST proxy. NDWI is low and stable, which indicates an area dominated by non-water surfaces."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "7.62",
+          "label": "Mean LST proxy (standard deviation 1.32)"
+        },
+        {
+          "value": "10.14",
+          "label": "Maximum LST proxy, August 2024"
+        },
+        {
+          "value": "5.27",
+          "label": "Minimum LST proxy, January 2025"
+        },
+        {
+          "value": "0.569",
+          "label": "Mean NDVI (0.471 to 0.672)"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and monitoring",
+      "items": [
+        "Relative index. The LST proxy is derived from the same optical indices (no thermal band), so its agreement with NDVI, NDBI and BSI is partly expected and is not independent evidence. Validation against Landsat thermal data, ECOSTRESS or weather stations is needed.",
+        "Incomplete series. January 2026 is missing from the 36-month series.",
+        "AOI averages. Area-wide averages hide neighborhood-scale variation.",
+        "Association, not causation. The data show association between surface type and relative heat, not that built-up land causes it."
+      ],
+      "nextTitle": "Monitoring indicators",
+      "next": [
+        "LST proxy reduction in priority zones.",
+        "NDVI recovery trajectory.",
+        "Hotspot area contraction.",
+        "Seasonal peak intensity moderation."
+      ]
+    },
+    "group": "Space"
+  },
+  {
+    "slug": "irrigation-monitoring-sicily",
+    "titleLight": "",
+    "titleBold": "AgroWater",
+    "subtitle": "Crop Water Stress Monitoring",
+    "summary": "A satellite-based prototype to monitor water use and crop water stress in Sicilian olive groves and citrus orchards, built on seasonal Sentinel-2 indices.",
+    "tags": [
+      "Sentinel-2",
+      "Water Stress",
+      "Spectral Indices",
+      "Precision Agriculture"
+    ],
+    "image": "images/projects/thumbnails/agrowater.png",
+    "heroText": "Seasonal Sentinel-2 composites and four spectral indices show how olive groves around Castelvetrano respond to water availability, to support irrigation planning and the control of water use.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "Agricultural water consortia struggle to trace consumption and collect fees, because they have no continuous monitoring system. This makes it hard to plan water needs and to control waste. The project proposes an integrated remote-sensing prototype, working on two target areas and designed on the model of IrriSAT and of the satellite irrigation monitoring implemented by Regione Campania. The integration of satellite data with ground sensors already in the territory, such as the SIAS agrometeorological network, is also being evaluated.",
+      "stats": [
+        {
+          "value": "2",
+          "label": "Target areas: Ribera and Castelvetrano"
+        },
+        {
+          "value": "4",
+          "label": "Spectral indices: NDVI, NDWI, WDSI, SAVI"
+        },
+        {
+          "value": "1,088",
+          "label": "Sentinel-2 scenes in four seasonal composites"
+        },
+        {
+          "value": "< 25%",
+          "label": "Cloud cover allowed per scene"
+        }
+      ],
+      "meta": {
+        "Area": "Castelvetrano and Ribera, Sicily, Italy",
+        "Period": "December 2022 to November 2023",
+        "Data": "Sentinel-2, digital terrain model",
+        "Output": "Seasonal index maps and terrain layers"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Water use is hard to trace and charge",
+        "text": "Without continuous monitoring, consortia cannot tell how much water each agricultural area uses. The prototype aims to monitor consumption for each area, forecast crop water needs, spot anomalous or unauthorised withdrawals, reduce waste and support strategic planning. It targets regions, land reclamation consortia and farmers."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Sentinel-2 seasons and terrain",
+        "text": "Seasonal Sentinel-2 composites over Castelvetrano from December 2022 to November 2023, with scenes above 25% cloud cover excluded, plus terrain layers for Sicily: elevation, slope and the Topographic Wetness Index."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Four indices read season by season",
+        "text": "NDVI and SAVI measure vegetation vigour, NDWI detects leaf water content and WDSI combines NDVI and NDWI to flag plants that stay green but lose water. Maps are compared across the four seasons, following an IrriSAT-style architecture."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Sentinel-2",
+          "text": "Seasonal composites of Castelvetrano: winter (December 2022 to February 2023) from 213 scenes, spring (March to May 2023) from 209, summer (June to August 2023) from 392 and autumn (September to November 2023) from 274. Scenes with cloud cover above 25% are excluded."
+        },
+        {
+          "name": "Digital terrain model",
+          "text": "Elevation (DTM) of Sicily, with slope and the Topographic Wetness Index (TWI) derived from it."
+        },
+        {
+          "name": "SIAS network",
+          "text": "Local readings from the Sicilian agrometeorological network. Combining them with the satellite data (data fusion) is under evaluation, to maximise the precision of the model."
+        },
+        {
+          "name": "Reference model",
+          "text": "IrriSAT, which uses Sentinel-2 to estimate crop evapotranspiration and sends registered farmers a personalised irrigation advice in millimetres of water. In Campania it is run by Ariespace with the AGEA paying agency and the SIGRIAN database."
+        }
+      ],
+      "deliverablesTitle": "What the prototype produces",
+      "deliverables": [
+        "Seasonal NDVI, NDWI, WDSI and SAVI maps for Castelvetrano.",
+        "Terrain layers for Sicily: elevation, slope and Topographic Wetness Index.",
+        "A prototype design for irrigation monitoring on two target areas, on the model of IrriSAT.",
+        "A support framework with three functions: classification of the territory, support to the design of water needs, and monitoring at 1, 3 and 5 years."
+      ]
+    },
+    "methods": {
+      "title": "From satellite scenes to water stress maps",
+      "text": [
+        "The prototype covers two areas. Ribera (Agrigento) has 6,000 to 7,000 ha of citrus orchards, of which 1,600 ha are DOP, on more than 1,500 farms with very fragmented land (Washington Navel, Navelina, Brasiliana and Vaniglia). Castelvetrano (Trapani) has 6,000 to 7,000 ha of olive groves (Nocellara del Belice) in the Belice valley, about 12,000 ha when neighbouring municipalities are included, on 3,000 to 4,000 farms, with 500 to 700 mm of rain per year and high land fragmentation.",
+        "The architecture is similar to IrriSAT: the satellite sees how much the plant is transpiring and the system turns it into the millimetres of water to give, avoiding waste. Water stress is read through four indices that describe different parts of the plant and soil system, and the analysis shown in this page covers Castelvetrano."
+      ],
+      "steps": [
+        {
+          "title": "1. Build seasonal composites",
+          "text": "Sentinel-2 scenes are collected for each season, with a 25% cloud threshold, and combined into one composite per season (1,088 scenes in total)."
+        },
+        {
+          "title": "2. Compute the indices",
+          "text": "NDVI and SAVI measure vegetation vigour, and SAVI is more reliable where soil is exposed. NDWI detects water content in the leaves. WDSI = (NDVI - NDWI) / |NDVI + NDWI| captures the plant's physiological response: it goes to zero when the two indices agree, with no stress, and rises toward +1 when vegetation is green but short of water."
+        },
+        {
+          "title": "3. Add terrain context",
+          "text": "Elevation, slope and the Topographic Wetness Index show where water tends to accumulate or run off, from the digital terrain model, where each pixel holds an accurate elevation."
+        },
+        {
+          "title": "4. Compare the seasons",
+          "text": "Maps are read season by season, to see how vegetation vigour and water content change through the year and where stress persists."
+        },
+        {
+          "title": "5. Support planning and control",
+          "text": "The planned service has three functions: classification of the territory and identification of the parameters that matter for agriculture, support to the design of water needs, and monitoring at 1, 3 and 5 years to verify the effects of policies and any deviations due to illicit use."
+        }
+      ],
+      "figures": [
+        {
+          "image": "images/projects/irrigation-monitoring-sicily/target-areas.png",
+          "caption": "Figure 1. The two target areas in Sicily: Castelvetrano (olive groves) and Ribera (citrus orchards)."
+        },
+        {
+          "image": "images/projects/irrigation-monitoring-sicily/data-fusion.png",
+          "caption": "Figure 2. Data fusion concept: satellite data and readings from the SIAS weather stations are combined into one irrigation output."
+        },
+        {
+          "image": "images/projects/irrigation-monitoring-sicily/slope-elevation.png",
+          "caption": "Figure 3. Slope (left) and elevation (right) over Sicily, from the digital terrain model."
+        },
+        {
+          "image": "images/projects/irrigation-monitoring-sicily/twi.png",
+          "caption": "Figure 4. Topographic Wetness Index over Sicily. Yellow marks the highest values along valleys and coastal plains, where water accumulates. Orange marks the lowest values, on the Madonie, the Nebrodi and Etna."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/irrigation-monitoring-sicily/ndvi-seasons.png",
+        "caption": "Figure 5. NDVI by season at Castelvetrano. Winter and spring show intense green and good photosynthetic activity. In summer yellow-orange dominates, reflecting water stress from heat and drought. In autumn there is a partial recovery thanks to the first rains, although inland areas remain in difficulty."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "NDWI",
+          "image": "images/projects/irrigation-monitoring-sicily/ndwi-seasons.png",
+          "caption": "Figure 6. NDWI by season at Castelvetrano. Values are highest in winter and spring, when there is more humidity, reach their minimum in summer because of seasonal drought, and partly recover in autumn. In summer the leaves have lost a significant amount of water, but the tree resists. Lake Trinità appears red in winter because the formula uses NIR and SWIR, and deep water absorbs almost all NIR."
+        },
+        {
+          "title": "WDSI",
+          "image": "images/projects/irrigation-monitoring-sicily/wdsi-seasons.png",
+          "caption": "Figure 7. WDSI by season at Castelvetrano. The red persists through all four seasons, showing chronic water stress. The recurring blue anomaly is Lake Trinità, a permanent water body with no stress."
+        },
+        {
+          "title": "SAVI",
+          "image": "images/projects/irrigation-monitoring-sicily/savi-seasons.png",
+          "caption": "Figure 8. SAVI by season at Castelvetrano. In winter the groves show good vegetation cover, with some orange areas of bare soil between the canopies. In spring green recedes and orange advances. In summer yellow-orange dominates the whole area, and autumn stays similar with a slight recovery."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Vegetation follows a Mediterranean cycle",
+          "text": "NDVI is highest in winter and spring, when olive trees show intense green and optimal water conditions, drops sharply in summer as the trees slow their metabolism to save water, and partly recovers in autumn."
+        },
+        {
+          "title": "Leaf water content peaks in the wet months",
+          "text": "NDWI is highest in winter and spring and lowest in summer, with a partial recovery in autumn."
+        },
+        {
+          "title": "Water stress is chronic",
+          "text": "NDVI and NDWI move in opposite directions: the plant keeps its chlorophyll but loses leaf water. At Castelvetrano this divergence is at its maximum and constant through the year, which explains the persistent red in the WDSI maps."
+        },
+        {
+          "title": "Bare soil shows between the trees",
+          "text": "SAVI reveals exposed soil between the canopies already in winter, and low cover across the area in summer."
+        },
+        {
+          "title": "Terrain explains where water is retained",
+          "text": "TWI values across Sicily are mostly medium to low (5 to 12), typical of a Mediterranean island with marked relief, steep slopes and little capacity to retain water."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "1,088",
+          "label": "Sentinel-2 scenes in four seasonal composites"
+        },
+        {
+          "value": "4",
+          "label": "Indices compared across seasons: NDVI, NDWI, WDSI, SAVI"
+        },
+        {
+          "value": "5 to 12",
+          "label": "Typical TWI values across Sicily, pointing to low water retention"
+        },
+        {
+          "value": "All year",
+          "label": "Persistent water stress signal in WDSI at Castelvetrano"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Next Steps",
+      "items": [
+        "The analysis shown covers Castelvetrano. Results for the Ribera citrus orchards are not shown yet.",
+        "The maps are interpreted visually, season by season. No validation against field measurements, irrigation records or weather station data is reported.",
+        "The integration with the SIAS network is still being evaluated, so the maps rely on satellite data only.",
+        "Water bodies such as Lake Trinità stand out in the indices and need to be read separately from the crops."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Fuse the satellite data with the SIAS station readings.",
+        "Forecast crop water needs and flag anomalous or unauthorised withdrawals.",
+        "Extend the analysis to the Ribera citrus orchards.",
+        "Monitor at 1, 3 and 5 years to verify the effect of policies and detect deviations."
+      ]
+    },
+    "group": "Space"
+  },
+  {
+    "slug": "drains-flood-risk",
+    "titleLight": "",
+    "titleBold": "FloodWatch",
+    "subtitle": "Urban Flood Risk & Predictive Maintenance of Urban Assets",
+    "summary": "A web GIS platform for public administrations that combines terrain, satellite, weather and field reports to map urban flood risk and support drainage management. Developed for the Italian Space Agency (ASI).",
+    "tags": [
+      "Sentinel-2",
+      "ArcGIS",
+      "Flood Risk",
+      "WebGIS"
+    ],
+    "image": "images/projects/thumbnails/floodwatch.png",
+    "heroText": "From terrain and satellite data to flood risk maps and storm scenarios, published as GIS services and explored in a web platform with live weather and reports from the field.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "Urban flooding depends on terrain, surface sealing, rainfall and the condition of the drains. DRAINS brings these sources into one web platform built on ArcGIS. Flood risk maps and storm scenarios are computed offline from terrain and satellite data, checked, and refreshed every three to six months. Live weather forecasts and reports from citizens and field operators are layered on top, so users see both how prone an area is to flooding and what is happening now.",
+      "stats": [
+        {
+          "value": "2",
+          "label": "Flood scenarios: blocked drains and working drains"
+        },
+        {
+          "value": "3–6 mo",
+          "label": "Refresh cycle of the pre-computed risk maps"
+        },
+        {
+          "value": "4",
+          "label": "User groups: viewers, editors, administrators and citizens"
+        },
+        {
+          "value": "25 m",
+          "label": "Modelling grid"
+        }
+      ],
+      "meta": {
+        "Client": "Italian Space Agency (ASI)",
+        "Area": "Pilot urban area",
+        "Stage": "Service concept defined (June 2026)",
+        "Data": "Official flood plans, satellite, terrain model, weather forecasts, citizen and field reports",
+        "Output": "Flood risk maps, storm scenarios, dashboards, mobile app for maintenance crews"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Flood risk information is scattered",
+        "text": "Official plans, terrain, satellite images, weather forecasts and reports from the territory come in different formats and update cycles. Public administrations need them in one place to see where water accumulates and which drains need attention."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Official, satellite and field data",
+        "text": "Regional and national flood plans (PAI and PGRA) and municipal data, satellite imagery and a digital terrain model, weather forecasts from external services, and geolocated reports and drain surveys collected on the ground."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Compute offline, publish, overlay live data",
+        "text": "Risk maps and scenarios are produced with GIS analysis, validated and published as standard map services on ArcGIS Enterprise. A web application and a mobile app for maintenance crews consume them, with weather and reports added as live layers."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Official flood and land data",
+          "text": "Hydrogeological and flood-risk plans (PAI, PGRA) and municipal datasets, harmonised in a single geospatial model."
+        },
+        {
+          "name": "Satellite and terrain",
+          "text": "Satellite data such as Sentinel-2 and a digital terrain model, used to derive the Topographic Wetness Index (TWI) and other terrain factors."
+        },
+        {
+          "name": "Land cover and context",
+          "text": "Land use and cover, sealed surfaces, green areas, buildings, roads and administrative boundaries."
+        },
+        {
+          "name": "Weather forecasts",
+          "text": "Forecasts and environmental data from external APIs, updated in near real time and shown as context next to the risk maps."
+        },
+        {
+          "name": "Reports and field surveys",
+          "text": "Reports from citizens and field operators, plus drain surveys, collected with Survey123 and Field Maps."
+        }
+      ],
+      "deliverablesTitle": "What the platform delivers",
+      "deliverables": [
+        "A flood risk map showing how prone each area is to water accumulation, based on terrain indicators such as the TWI.",
+        "Two storm scenarios: one with blocked drains, with more intense flooding, and one with working drains, where some areas still flood.",
+        "Live layers for weather forecasts, citizen reports and the state of the drainage network.",
+        "Dashboards with report counts, status and distribution, filters by area, time and event type, and map export to PDF and images.",
+        "A mobile app for maintenance crews to see, update and add reports and drains in the field."
+      ]
+    },
+    "methods": {
+      "title": "From heterogeneous data to decision maps",
+      "text": [
+        "All sources are validated, checked for quality and reprojected to metric reference systems, so that distances and areas are measured correctly. They are then aligned on a regular 25 m modelling grid, so the model does not claim more precision than the observations support.",
+        "Risk maps and scenarios are generated offline with GIS analysis and published as map services after validation. Live weather and reports do not change the models: they add the current picture on top of the pre-computed maps. Drains are handled as a scenario modifier, so that better drainage never raises the estimated risk.",
+        "In plain words: the TWI (Topographic Wetness Index) shows where water tends to gather; PAI and PGRA are the official plans on hydrogeological and flood risk; a storm scenario is a simulation of heavy rain; storm drains are the street inlets that carry water away."
+      ],
+      "steps": [
+        {
+          "title": "1. Collect",
+          "text": "Static data (official plans, satellite, terrain) is imported periodically. Weather and reports arrive continuously."
+        },
+        {
+          "title": "2. Validate and harmonise",
+          "text": "Quality checks, reprojection and alignment on a common grid keep the sources consistent."
+        },
+        {
+          "title": "3. Compute risk",
+          "text": "Terrain indicators such as the TWI describe how prone each area is to water accumulation."
+        },
+        {
+          "title": "4. Model scenarios",
+          "text": "Flood modelling compares storm events with blocked and with working drains."
+        },
+        {
+          "title": "5. Publish",
+          "text": "Validated maps become interoperable services (REST, WMS, WFS) every three to six months."
+        },
+        {
+          "title": "6. Consult and update",
+          "text": "Users explore maps and dashboards; citizens and crews send reports that feed the same picture."
+        }
+      ],
+      "figures": [
+        {
+          "image": "images/projects/drains-flood-risk/architecture.svg",
+          "title": "Flood maps are prepared in advance; live data shows the situation now",
+          "caption": "Figure 1. From data to decisions in five steps. Weather, citizen reports and crew updates are added on top of the pre-computed maps."
+        },
+        {
+          "image": "images/projects/drains-flood-risk/operational-flow.jpg",
+          "title": "Technical view: three phases around one central data model",
+          "caption": "Figure 2. Data intake, offline analysis and outputs, with the users who consume them. Source diagram, labels are in Italian."
+        }
+      ]
+    },
+    "insights": {
+      "title": "What the platform shows",
+      "main": {
+        "image": "images/projects/drains-flood-risk/risk-chain.svg",
+        "title": "Working drains reduce flooding, but do not remove it",
+        "caption": "Figure 3. One map shows where water tends to gather. Two storm scenarios compare blocked and working drains."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "image": "images/projects/drains-flood-risk/susceptibility-map-3d.jpg",
+          "title": "The risk map shows where water is likely to gather",
+          "caption": "Figure 4. Illustrative 3D rendering of the flood risk map. Labels are in Italian and visuals may change during development."
+        },
+        {
+          "image": "images/projects/drains-flood-risk/flood-scenario-3d.jpg",
+          "title": "A storm scenario shows how deep the water gets, hour by hour",
+          "caption": "Figure 5. Illustrative rendering: water depth after one hour of intense rain with a 50-year return period, followed over 12 hours. Labels are in Italian."
+        },
+        {
+          "image": "images/projects/drains-flood-risk/dashboard.jpg",
+          "title": "One dashboard brings maps, weather and reports together",
+          "caption": "Figure 6. Illustrative dashboard mock-up with sample data. Labels are in Italian."
+        },
+        {
+          "image": "images/projects/drains-flood-risk/gis-tools.png",
+          "title": "Standard GIS tools let users measure, draw and compare layers",
+          "caption": "Figure 7. Illustrative rendering of the GIS tools: navigation, drawing, measurement, layer comparison and export. Labels are in Italian."
+        },
+        {
+          "image": "images/projects/drains-flood-risk/field-apps.jpg",
+          "title": "Citizens report problems and crews update them on the move",
+          "caption": "Figure 8. Illustrative rendering of the citizen reporting form (left) and the maintenance crew app (right). Labels are in Italian."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Design choices",
+      "items": [
+        {
+          "title": "Static risk, live context",
+          "text": "Risk maps are pre-computed and refreshed every three to six months. Weather and reports are shown on top of them but never alter the models."
+        },
+        {
+          "title": "Built on open standards",
+          "text": "Map services follow OGC standards (WMS, WFS) and REST APIs, so the platform connects to external systems and can scale."
+        },
+        {
+          "title": "Drains are a scenario modifier",
+          "text": "Blocked and working drains are two separate scenarios, so the effect of maintenance can be compared directly."
+        },
+        {
+          "title": "Citizens and crews feed the platform",
+          "text": "Reports from citizens and field operators are classified by type, status and priority by editors, and improve the data over time."
+        },
+        {
+          "title": "One platform, different roles",
+          "text": "Viewers consult and analyse, editors manage reports and content, administrators handle users, services, data updates and backups."
+        },
+        {
+          "title": "Replicable by design",
+          "text": "The methods and tools can be extended to other territories and to other environmental monitoring and risk management domains."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "2",
+          "label": "Storm scenarios: blocked and working drains"
+        },
+        {
+          "value": "2D + 3D",
+          "label": "Maps, scenes and dashboards in one web platform"
+        },
+        {
+          "value": "Mobile",
+          "label": "App for maintenance crews to update reports in the field"
+        },
+        {
+          "value": "Open",
+          "label": "OGC services and REST APIs for interoperability"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Next Steps",
+      "items": [
+        "DRAINS is a decision-support tool. It does not replace a full hydraulic study of the drainage network.",
+        "Risk maps are updated every three to six months. Live weather and reports give context but do not change the models.",
+        "Reports can be biased towards places where people are more likely to report.",
+        "Renderings in this page are illustrative and may change during development."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Develop and deploy the platform following the defined service concept.",
+        "Calibrate and validate the risk maps and publish their metrics.",
+        "Extend the platform to new territories and monitoring domains."
+      ]
+    },
+    "group": "Space"
+  },
+  {
+    "slug": "satellite-broadband-experimentation",
+    "status": "On going",
+    "titleLight": "Satellite Broadband",
+    "titleBold": "Experimentation",
+    "summary": "A field trial of Starlink satellite backhaul to bring ultra-broadband connectivity to remote Lombardy villages.",
+    "tags": [
+      "Starlink",
+      "Satellite Broadband",
+      "MPLS L2VPN",
+      "Network Quality"
+    ],
+    "image": "images/projects/thumbnails/satellite-broadband.png",
+    "heroText": "Traffic from virtual villages served by fibre, copper and wireless is collected at regional access points and carried over Starlink to Milan, to test whether satellite links can support ultra-broadband services.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "The experimentation tests satellite connectivity as backhaul for ultra-broadband access in Lombardy. Traffic from the Virtual Villages, reached through FTTH, FTTC and FWA access networks, is collected at an Access Network Collection Point (PRRA) and forwarded over an L2VPN on MPLS carried by the Starlink infrastructure to the aggregation point in Milan Caldera, then routed to the Internet. Quality is measured under load at each PRRA.",
+      "stats": [
+        {
+          "value": "10",
+          "label": "PRRAs in the experimentation"
+        },
+        {
+          "value": "6",
+          "label": "Starlink antennas per PRRA, at most"
+        }
+      ],
+      "meta": {
+        "Area": "Lombardy, Italy",
+        "Data": "Network throughput, latency and packet loss",
+        "Output": "Network quality measurements under load"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Ultra-broadband beyond the terrestrial network",
+        "text": "Remote villages are hard to serve with terrestrial backhaul. The trial checks whether Starlink links can carry the traffic of fibre, copper and wireless access networks with enough quality for everyday services."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Throughput, latency and packet loss",
+        "text": "Download and upload speed per Virtual Village, UDP latency (a ping under load), TCP round trip time and packet loss, measured under simulated load at the PRRAs."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Starlink as MPLS backhaul",
+        "text": "Each PRRA aggregates its villages and sends their traffic over an L2VPN on MPLS carried by Starlink. Capacity grows with the number of antennas, up to about 2 Gbps in download and 240 Mbps in upload with six antennas."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Virtual Villages",
+          "text": "Villages reached through FTTH on optical fibre, FTTC on copper and FWA on wireless access networks."
+        },
+        {
+          "name": "PRRA equipment",
+          "text": "Each PRRA has 6 Starlink Enterprise kits with modem, 1 KVH satellite kit with a 74 cm antenna, 1 Davis weather station, 1 Cisco NCS 540 aggregation router and 1 Huawei EA5801E-FL16 OLT."
+        },
+        {
+          "name": "Weather data",
+          "text": "Weather stations at each PRRA, to correlate network quality with weather conditions in the next phase."
+        }
+      ],
+      "deliverablesTitle": "What the experimentation produces",
+      "deliverables": [
+        "Speed per Virtual Village, in download and upload.",
+        "UDP latency, TCP round trip time and packet loss.",
+        "A scalable design for satellite backhaul with MPLS multiplexing."
+      ]
+    },
+    "methods": {
+      "title": "From the access network to the Internet",
+      "text": [
+        "Villages are reached by three access technologies: FTTH on optical fibre, FTTC on copper and FWA on wireless. Their traffic reaches the PRRA over terrestrial links, then crosses Starlink on an L2VPN over MPLS to the Milan Caldera aggregation point and on to Internet.",
+        "Scalability comes from aggregating several Starlink antennas, from MPLS multiplexing and from the integration with operators' Layer 2 networks, which allows the available bandwidth to be shared dynamically between terminals."
+      ],
+      "steps": [
+        {
+          "title": "1. Collect at the PRRA",
+          "text": "Terrestrial links from the villages end at the PRRA, where an OLT and a Cisco aggregation router gather the traffic."
+        },
+        {
+          "title": "2. Carry it over Starlink",
+          "text": "Up to six Starlink antennas per PRRA carry an L2VPN over MPLS to Milan Caldera, with up to 2 Gbps downlink and 240 Mbps uplink."
+        },
+        {
+          "title": "3. Load the network",
+          "text": "Traffic from the simulated users of each Virtual Village is generated in download and upload."
+        },
+        {
+          "title": "4. Measure",
+          "text": "Speed, UDP latency, TCP round trip time and packet loss are recorded at each PRRA."
+        }
+      ],
+      "figures": [
+        {
+          "image": "images/projects/satellite-broadband/architecture.png",
+          "caption": "Figure 1. General architecture: Virtual Villages on FTTH, FTTC and FWA, the PRRA, the Starlink link and the Milan Caldera and Milan Bernina nodes towards the Internet. Labels are in Italian."
+        },
+        {
+          "image": "images/projects/satellite-broadband/prra-azzano-san-paolo.png",
+          "caption": "Figure 2. PRRA Azzano San Paolo, with FTTH and FTTC access, OLT, MPLS router and Starlink kits."
+        },
+        {
+          "image": "images/projects/satellite-broadband/prra-milano-bernina.png",
+          "caption": "Figure 3. PRRA Milano Bernina, with the same equipment as Azzano San Paolo."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/satellite-broadband/villages-map.png",
+        "caption": "Figure 4. Virtual Villages in Lombardy: FTTH in green, FTTC in brown."
+      },
+      "charts": [],
+      "gallery": []
+    },
+    "limits": {
+      "title": "Next Steps",
+      "nextTitle": "Next steps",
+      "next": [
+        "Validate the indicators and correlate them with weather data.",
+        "Compare FTTH, FTTC and FWA access in more depth."
+      ]
+    },
+    "group": "Space"
+  },
+  {
+    "slug": "clepsydra-galileo-timing-receiver",
+    "titleLight": "CLEPSYDRA",
+    "titleBold": "Galileo Timing Receiver",
+    "summary": "A European project to build certified, Galileo-based timing receivers that give critical infrastructure secure and resilient time synchronization.",
+    "tags": [
+      "Galileo",
+      "Timing",
+      "EUSPA",
+      "Critical Infrastructure"
+    ],
+    "image": "images/projects/thumbnails/clepsydra.png",
+    "heroText": "CLEPSYDRA, funded by the EUSPA Fundamental Elements programme, develops a cost-efficient timing receiver platform at TRL 7/8 based on Galileo Second Generation.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "CLEPSYDRA aims to design, develop and bring to market a new generation of certified Galileo-based timing receivers, ensuring secure, resilient and high-precision time synchronization for critical infrastructure. Building on the Timing Service Message (TSM) and Open Service Navigation Message Authentication (OS-NMA) of Galileo Second Generation (G2G), it enables a European-level standardized timing service compliant with CEN/CENELEC EN 16605:2024. Its mission is to strengthen Europe's technological autonomy in time and synchronization services, with a high-performance and cost-efficient receiver platform that protects energy, telecommunications, finance and transport networks against cyber and geopolitical threats. BIP supports the exploitation and commercialization of the product, with strategy and go-to-market, business analysis, economic-financial models, stakeholder engagement, communication and dissemination.",
+      "stats": [
+        {
+          "value": "TRL 7/8",
+          "label": "Maturity of the receiver platform"
+        },
+        {
+          "value": "5",
+          "label": "Consortium partners, BIP among them"
+        },
+        {
+          "value": "4",
+          "label": "Core sectors: energy, telecom, finance, transport"
+        },
+        {
+          "value": "99.8%",
+          "label": "ASPIS accuracy in the Jammertest 2025 time-offset test"
+        }
+      ],
+      "meta": {
+        "Area": "Europe",
+        "Funding": "EUSPA, Fundamental Elements programme",
+        "Standard": "CEN/CENELEC EN 16605:2024, IEEE P1952",
+        "Output": "Certified Galileo timing receiver"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Trusted time for critical infrastructure",
+        "text": "Recent GNSS jamming, spoofing and signal-loss events show that a disruption can mean cancelled flights, ship navigation problems and major economic losses. A UK Government report counted over 1,000 GNSS interference events in one year at a London Stock Exchange detector, and estimated losses of £7.64 million for a seven-day outage."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Galileo G2G, threats and sector needs",
+        "text": "Galileo Second Generation timing services (TSM and OS-NMA), the main spoofing and meaconing attack scenarios, and the synchronization needs, service levels and regulations of energy, telecom, finance, transport and other critical sectors."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "A certified, standardized timing platform",
+        "text": "A multi-constellation, multi-frequency receiver with a time and frequency core, anti-jamming and ML-based anti-spoofing, built on EN 16605:2024 and designed to address the emerging IEEE P1952 standard for resilient PNT user equipment."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Galileo G2G",
+          "text": "Timing Service Message disseminated on the I/NAV message, with monitoring of GST and UTC accuracy, and OS-NMA authentication."
+        },
+        {
+          "name": "Standards",
+          "text": "CEN/CENELEC EN 16605:2024 for Galileo timing receivers, and the emerging IEEE P1952 for resilient PNT user equipment."
+        },
+        {
+          "name": "Consortium",
+          "text": "Thales Alenia Space Italia (GNSS receivers), ELPROMA Elektronika (resilient time synchronization, Poland), PikTime Systems (time transfer and time-frequency software, Poland), GEA Space (navigation and anti-spoofing, Czech Republic) and BIP (exploitation and go-to-market)."
+        },
+        {
+          "name": "Service levels",
+          "text": "Galileo Timing Service Levels: maximum time error of 1000 ns for SL1, 100 ns for SL2, and 15 ns (GST) and 30 ns (UTC) for SL3."
+        }
+      ],
+      "deliverablesTitle": "What the project delivers",
+      "deliverables": [
+        "A cost-efficient, high-performance timing receiver platform at TRL 7/8.",
+        "A certified Galileo-based receiver for critical infrastructure.",
+        "A central point of trusted UTC time, with Galileo as the single source and GPS as a backup.",
+        "Support to a European-standardized timing service."
+      ]
+    },
+    "methods": {
+      "title": "From Galileo signals to trusted time",
+      "text": [
+        "CLEPSYDRA is not an ordinary GNSS time server. It is meant to act as an enterprise (IT) and industrial (OT) time firewall, a central point of trusted UTC time that can optionally be isolated from the physical satellites through RF filtering and GNSS simulation.",
+        "The receiver tracks Galileo E1, E5a/E5b and E6, processes the Timing Service Message, applies OS-NMA authentication and T-RAIM integrity monitoring, and falls back to holdover when GNSS is lost. It outputs 1 PPS and 10 MHz, and distributes time over PTP, NTP and IRIG."
+      ],
+      "steps": [
+        {
+          "title": "1. Define sector needs",
+          "text": "Collect timing requirements and Galileo service levels for energy, telecom, finance, transport and other sectors."
+        },
+        {
+          "title": "2. Receive and process Galileo",
+          "text": "Multi-constellation, dual-frequency tracking, TSM decoding, OS-NMA and T-RAIM, with removal of satellites that fail the local barriers."
+        },
+        {
+          "title": "3. Detect and mitigate attacks",
+          "text": "RF interference detection and mitigation, plus ASPIS, a machine-learning spoofing detector patented by GEA Space."
+        },
+        {
+          "title": "4. Keep and distribute time",
+          "text": "A GNSS-disciplined time and frequency core with holdover, delivering 1 PPS, 10 MHz, PTP, NTP and IRIG."
+        },
+        {
+          "title": "5. Certify and align with standards",
+          "text": "Align the receiver with EN 16605:2024 and with the five levels of IEEE P1952: detect and alert, recover, resist, withstand and verify."
+        }
+      ],
+      "figures": [
+        {
+          "image": "images/projects/clepsydra/aspis-workflow.png",
+          "caption": "Figure 1. ASPIS workflow: the GNSS receiver streams data in real time to ASPIS, which separates authentic from spoofed signals before they reach the timing engine. The models are trained on over 200 million data points."
+        },
+        {
+          "image": "images/projects/clepsydra/standards.png",
+          "caption": "Figure 2. Alignment with EN 16605:2024 and the five resilience levels of IEEE P1952."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/clepsydra/receiver-platform.png",
+        "caption": "Figure 3. The CLEPSYDRA Galileo receiver platform: GNSS antenna, GNSS core (RF front end, DSP and navigation processing) and time and frequency core (time server and GNSS-DO) with IRIG, PTP, NTP, 1 PPS and 10 MHz outputs."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Service levels across sectors",
+          "image": "images/projects/clepsydra/service-levels.png",
+          "caption": "Figure 4. Galileo Timing Service Levels and current and future timing needs of energy, telecom, finance and transport."
+        },
+        {
+          "title": "ASPIS at Jammertest 2025",
+          "image": "images/projects/clepsydra/jammertest-2025.png",
+          "caption": "Figure 5. Live spoofing test with a 15 minute time offset on GPS L1 C/A: the time solution from ASPIS stays on the real time while the raw receiver time jumps. Extract from the Jammertest 2025 report."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Why trusted time matters",
+      "items": [
+        {
+          "title": "Finance",
+          "text": "A UK Government report (October 2023) found over 1,000 GNSS interference events in one year at a London Stock Exchange detector, and estimated £7.64 million of losses for a seven-day GNSS outage."
+        },
+        {
+          "title": "Telecommunications",
+          "text": "Poland's National Institute of Telecommunications (January 2026) warns that GNSS disruptions can destabilise mobile networks, specialised communication systems and emergency services."
+        },
+        {
+          "title": "Aviation",
+          "text": "Repeated GNSS disruptions forced Finnair to suspend flights to Tartu for one month in 2024. Reuters reported two flights returning because GPS interference prevented landing."
+        },
+        {
+          "title": "Maritime",
+          "text": "Finnish and Estonian authorities (June 2025) warned that GNSS disruption in the Gulf of Finland was causing positioning problems, autopilot failures and a higher accident risk."
+        },
+        {
+          "title": "Desynchronization as a cyber threat",
+          "text": "The consortium points out that desynchronizing IT and OT systems is a cheap and non-invasive way to cause denial of service at critical infrastructure, and one that the growing Industry 4.0 market may not perceive."
+        }
+      ]
+    },
+    "useCases": {
+      "title": "Sector applications",
+      "items": [
+        {
+          "title": "Energy (SL2)",
+          "text": "Power transmission networks use Wide Area Monitoring, Protection and Control systems and phasor measurement units. If a unit or the central server drifts out of sync, valid data can be rejected and wrong protection actions triggered. Relevant regulation: NIS2 / CER and the EU System Operation Guideline."
+        },
+        {
+          "title": "Telecom (SL2/SL3)",
+          "text": "5G radio access and core networks need precise phase and frequency, kept through GNSS outages by holdover. CLEPSYDRA adds anti-jamming, anti-spoofing, OS-NMA and T-RAIM. Relevant standards: ITU-T G.8271/G.8272, 3GPP and NIS2."
+        },
+        {
+          "title": "Finance (SL1)",
+          "text": "Trading venues, high-frequency trading and banking data centers need UTC-traceable timestamps and an audit trail. Relevant regulation: MiFID II / MiFIR RTS 25, NIS2 / CER, and eIDAS and ETSI trust-service standards."
+        },
+        {
+          "title": "Transport and others (SL1)",
+          "text": "Air traffic control, rail and waterworks depend on synchronized nodes for event sequencing, monitoring and safe operations. Relevant regulation: NIS2 / CER and ERTMS."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "TRL 7/8",
+          "label": "Maturity of the receiver platform"
+        },
+        {
+          "value": "99.8%",
+          "label": "ASPIS accuracy, Jammertest 2025"
+        },
+        {
+          "value": "200M+",
+          "label": "Data points used to train the ASPIS models"
+        },
+        {
+          "value": "5",
+          "label": "Consortium partners"
+        }
+      ]
+    },
+    "links": [
+      {
+        "label": "Visit the CLEPSYDRA website",
+        "url": "https://www.clepsydra-eu.com/"
+      },
+      {
+        "label": "Follow CLEPSYDRA on LinkedIn",
+        "url": "https://www.linkedin.com/company/clepsydraproduct/"
+      }
+    ],
+    "group": "Space"
+  },
+  {
+    "slug": "transport-demand-forecasting",
+    "titleLight": "Transport Demand",
+    "titleBold": "Forecasting Model",
+    "subtitle": "Rail Demand Forecasting for Major International Events",
+    "summary": "A methodology to estimate how much extra high-speed rail demand a major event generates in Italy, using historical rail data, mobile network data and past events.",
+    "tags": [
+      "Transport Demand",
+      "Demand Forecasting",
+      "Event Mobility",
+      "Mobility Data",
+      "Rail Planning"
+    ],
+    "image": "images/projects/thumbnails/TRI_ModelloDomanda_card.png",
+    "heroText": "From past events and historical rail and mobility data to the extra high-speed rail passengers expected for a major international event in 2027.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "The product estimates the extra rail demand that a major international event adds to the high-speed connections towards a large Italian metropolitan area. It builds on historical rail data, mobile network data, air passenger data and a benchmark of past events and supports the planning of rail services for the event.",
+      "stats": [
+        {
+          "value": "4",
+          "label": "Project phases"
+        },
+        {
+          "value": "3",
+          "label": "Main data sources: rail, mobile network, air"
+        },
+        {
+          "value": "2",
+          "label": "Demand components: ordinary and event"
+        },
+        {
+          "value": "1",
+          "label": "Destination metropolitan area"
+        }
+      ],
+      "meta": {
+        "Area": "Major Italian metropolitan area, high-speed network",
+        "Period": "2023–2025, with a scenario for 2027",
+        "Data": "Historical rail data, mobile network data, IATA, event benchmark",
+        "Output": "Extra rail demand by origin and corridor"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Historical series describe normal days, not event days",
+        "text": "Rail demand can change during a major event, and historical series alone do not show by how much. Planners need to know how many extra passengers to expect, separately from ordinary mobility and where they come from."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Rail, mobile network, air and event data",
+        "text": "Historical rail demand from a leading European high-speed rail operator, aggregated mobile network data, IATA air passenger data, a benchmark of comparable national and international events and the forecasting models already in use."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "From expected visitors to high-speed rail flows",
+        "text": "Starting from the expected number of visitors, the model estimates the share that travels by high-speed rail and splits it by geographic origin along the main corridors. Historical demand gives the ordinary baseline, to which the event lift is added."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Historical rail demand",
+          "text": "Passenger flows and origin–destination relations on the main high-speed corridors, from a leading European high-speed rail operator."
+        },
+        {
+          "name": "Mobile network data",
+          "text": "Aggregated trips between geographic areas, used to describe overall mobility flows and their spatial distribution."
+        },
+        {
+          "name": "IATA air passenger data",
+          "text": "Air passenger flows and origin–destination relations, to compare air with the other transport modes."
+        },
+        {
+          "name": "Major event benchmark",
+          "text": "Location, dates, type and attendance of national and international events."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "An assessment of the current forecasting processes and models, with the departments involved, the data they use and the main improvement needs.",
+        "A benchmark of traditional and innovative forecasting methods, with a review of the available data sources and what each can be used for.",
+        "A methodology to estimate the extra rail demand of a major international event, based on comparable past events and the combined mobility data."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "The work starts with a review of the current forecasting processes and models, and of the departments involved in planning the rail offer. Forecasting methods and mobility data sources are then compared to choose the ones that can be added to the current process. Comparable major events are mapped, historical rail and mobility data are collected and analyzed, and the results are used to build the lift model for the extra demand of a major international event.",
+        "The model is top-down: it starts from the expected visitors and works down to the high-speed rail share and its origin. Rail, mobile network and air passenger data are used together to maximize the model accuracy."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/transport-demand-forecasting/TRI_ModelloDomanda_metod.png",
+          "caption": "Figure 1. Project workflow, from the review of current models and data sources to the forecasting methodology."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/transport-demand-forecasting/TRI_ModelloDomanda_map_station.png",
+        "caption": "Figure 2. Main high-speed rail corridors and stations included in the analysis. They define the area covered by the forecast, around the destination metropolitan area."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Data sources",
+          "image": "images/projects/movility/transport-demand-forecasting/TRI_ModelloDomanda_Data.png",
+          "caption": "Figure 3. Comparison of the main data sources for transport demand analysis, by coverage, level of detail, update frequency and ease of use in forecasting models."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "External factors",
+          "text": "Current models can be improved mainly by taking external factors, such as major events, into account."
+        },
+        {
+          "title": "Data work better together",
+          "text": "Each dataset covers only part of the picture. Rail, mobile network and air data are more useful together than alone."
+        },
+        {
+          "title": "Origin of extra flows",
+          "text": "The top-down approach separates the high-speed rail share of event demand and shows where the extra passengers come from."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "8",
+          "label": "Innovative use cases reviewed"
+        },
+        {
+          "value": "11",
+          "label": "Data source categories scouted"
+        },
+        {
+          "value": "3",
+          "label": "Forecasting models analyzed"
+        },
+        {
+          "value": "~2M",
+          "label": "Mobility records analyzed"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Historical data are not always consistent or detailed enough to rebuild mobility flows and event demand precisely.",
+        "The model is applied to a one-of-a-kind event, so comparisons with past events necessarily rely on assumptions."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Fine-tuning of the forecasting parameters and estimation methods.",
+        "A roadmap to bring the methodology into the operator’s forecasting and service planning processes."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "regione-calabria-smart-ticketing",
+    "titleLight": "",
+    "titleBold": "Regional Account-Based Ticketing Platform",
+    "subtitle": "Building a Regional Smart Ticketing Ecosystem",
+    "summary": "A regional Account-Based Ticketing ecosystem that combines operator sales channels, validation data and integrated fare rules to give passengers a seamless mobility experience across Calabria Region.",
+    "tags": [
+      "Smart Ticketing",
+      "ABT",
+      "Public Transport",
+      "Integrated Mobility"
+    ],
+    "image": "images/projects/thumbnails/regione-calabria-st-intro.png",
+    "heroText": "From passenger access and validation to fare calculation and operator settlement, a shared ABT architecture connects every step of the journey within one interoperable regional ecosystem.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "The project turns fare catalogues, sales data, validation data and operators' technology assets into a regional Account-Based Ticketing ecosystem for public transport services across Calabria. It is built around a shared architecture for ticketing, payment, validation and settlement across urban, extra-urban and rail services.",
+      "stats": [
+        {
+          "value": "28",
+          "label": "Public Transport operators"
+        },
+        {
+          "value": "1,775",
+          "label": "Regional bus fleet"
+        },
+        {
+          "value": "3",
+          "label": "Transport modes integrated"
+        },
+        {
+          "value": "5",
+          "label": "Provinces covered"
+        }
+      ],
+      "meta": {
+        "Area": "Calabria, Italy",
+        "Period": "2026–2029",
+        "Data": "Fare products, sales, validation and technology-asset data",
+        "Output": "Regional Account-Based Ticketing platform"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "From fragmented ticketing to one interoperable regional ecosystem",
+        "text": "Regional ticketing systems remain fragmented across products, sales channels, validation processes and technologies. Limited interoperability hinders seamless travel, integrated payments and consistent passenger experience."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Transport, Commercial and Operator Technology AS-IS assessment",
+        "text": "The assessment analyses transport demand, revenues, ticketing, fleet, onboard equipment, sales channels, validation methods, system architectures and payment models. A key focus is functional requirements design and technical coordination and oversight of development activities, based on project documents, questionnaires and working sessions."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Connecting the dots across the ticketing ecosystem",
+        "text": "The approach aligns passenger experience, operating models and technology architecture through ticketing benchmarks, supplier assessment, stakeholder and interface mapping. These inform pilot design, target ABT architecture, governance, integrated-fare principles and a phased rollout roadmap."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Transport operator landscape",
+          "text": "Operator services, fleet characteristics, onboard equipment, ticket products, sales channels and existing technologies, collected through project documentation and operator engagement."
+        },
+        {
+          "name": "Transport simulation data",
+          "text": "Transport demand, passenger flows and service volumes derived from transport simulation model outputs."
+        },
+        {
+          "name": "Financial and Fare Data",
+          "text": "Fare structures, ticket prices, passenger revenues, ticket sales and payment models, obtainable from transport operators and regional transport authorities."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "Target architecture, functional requirements and governance model for the regional Account-Based Ticketing ecosystem, supporting the implementation and management of prepaid and postpaid ticketing services.",
+        "Integrated fare model that enables seamless travel across rail, urban and extra-urban services through a common fare framework.",
+        "Pilot and regional rollout roadmap outlining implementation priorities, technical coordination activities and the progressive extension to additional operators and services."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "Fare catalogues, sales data, validation data and operators’ technology inventories are collected and analysed across Calabria’s public transport ecosystem. The information is used to assess technological maturity, compare alternative implementation scenarios and define the scope of a pilot deployment. Operational and validation data generated during the pilot are then examined to identify critical issues, validate key assumptions and consolidate lessons learned. The resulting evidence is used to define governance arrangements, technical requirements and the target architecture for the regional Account-Based Ticketing ecosystem.",
+        "The pilot-first approach is chosen to validate operational, technological and fare-integration assumptions before regional deployment. The assessment focuses on operators’ existing ticketing systems, validation technologies and fare structures to ensure that governance, architecture and implementation choices reflect the characteristics of Calabria’s transport ecosystem."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/regione-calabria-smart-ticketing/regione-calabria-st-methodology.png",
+          "caption": "Figure 1. Transformation of operator-level ticketing and technology information into a regional Account-Based Ticketing model."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/regione-calabria-smart-ticketing/regione-calabria-st-architecture.png",
+        "caption": "Figure 2. Functional view of the regional Account-Based Ticketing ecosystem. The diagram identifies the information flows between regional planning systems, transport operators, payment service providers and the shared ABT platform."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "User Journey",
+          "image": "images/projects/movility/regione-calabria-smart-ticketing/regione-calabria-st-framework.png",
+          "caption": "Figure 3. A structured framework to compare ticketing suppliers across technical, functional and operational criteria, supporting the selection of the optimal solution."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Integrated services",
+          "text": "The pilot brings together rail, urban and extra-urban services within a single travel experience, demonstrating the feasibility of multimodal fare integration across different transport operators."
+        },
+        {
+          "title": "Fare harmonisation",
+          "text": "The analysis of existing fare products enabled the definition of a single integrated fare model for the pilot, establishing a common framework for fare management, validation and settlement."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "56",
+          "label": "Transport lines integrated"
+        },
+        {
+          "value": "1",
+          "label": "Integrated fare model defined"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "The pilot covers a limited set of operators, services and travel scenarios. Additional operational evidence is required to validate the applicability of the proposed model at regional scale."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Regional rollout across additional operators and services, extending the model beyond the pilot scope and supporting the future reorganisation of Calabria's public transport network.",
+        "Extension of the ABT ecosystem towards national interoperability and future integration with Mobility-as-a-Service platforms and digital mobility services."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "lombardy-data-mobility-platform",
+    "titleLight": "",
+    "titleBold": "Data Mobility Platform For Infomobility",
+    "subtitle": "Spatial Analysis For Passenger Information",
+    "summary": "A spatial analysis combines public transport network data, regional mapping and mobility services to identify priority hubs for passenger information kiosks in Lombardy, alongside a regional data platform feasibility study.",
+    "tags": [
+      "Travel Information",
+      "Public Transport",
+      "GIS Analysis",
+      "Intermodality"
+    ],
+    "image": "images/projects/thumbnails/lombardy-mobility-card.png",
+    "heroText": "From stop-level services and routes within 450 m to a Connectivity Indicator, the analysis identifies 30 priority hubs to guide the placement of passenger information kiosks.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "The project identifies priority locations for passenger information kiosks in Lombardy by combining transport network data, mapping and information on mobility services. Spatial analysis supports the selection of 30 hubs, while a feasibility study compares three options for a regional platform managing static and real-time data under Action 2.8.2 of the 2021–2027 Regional PR FESR Programme.",
+      "stats": [
+        {
+          "value": "37,436",
+          "label": "Stops in the source database"
+        },
+        {
+          "value": "66",
+          "label": "Operators with published timetables"
+        },
+        {
+          "value": "1,689",
+          "label": "Routes in the source database"
+        },
+        {
+          "value": "212,220",
+          "label": "Service trips across timetable validity periods"
+        }
+      ],
+      "meta": {
+        "Area": "Lombardy, Italy; detailed analysis in municipalities with an approved Sustainable Urban Mobility Plan",
+        "Period": "2026; reference weekday 24 April 2026",
+        "Data": "Muoversi in Lombardia, Regione Lombardia Geoportal, ISTAT, Ecomobs",
+        "Output": "Hub database, indicator and priority selection"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Locating information kiosks at useful interchange points",
+        "text": "Services and operators form a regional network with uneven interchange opportunities. The challenge is to identify hubs where information kiosks can help passengers access services and make connections, while assessing how a regional platform can integrate travel information."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Stops, routes and mobility services across Lombardy",
+        "text": "The analysis links stops, routes, itineraries and operators with infrastructure, shared and electric mobility services. In municipalities with an approved Sustainable Urban Mobility Plan, mobility points and routes are assessed within 450 m of stops. Regional data assets and platform options are also reviewed."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Comparing nearby services with a Connectivity Indicator",
+        "text": "Tableau links stop, route and operator records, while QGIS supports spatial analysis. Mobility points and routes within 450 m receive equal importance in a Connectivity Indicator. Hub comparisons and available shared mobility information support the selection of 30 priority locations."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Mobility network and services",
+          "text": "Muoversi in Lombardia provides stops, routes, itineraries, operators and published service trips across the respective timetable validity periods."
+        },
+        {
+          "name": "Regional mapping",
+          "text": "The Regione Lombardia Geoportal provides administrative boundaries and mobility infrastructure, including railways, stations, metro lines, roads and cycle networks."
+        },
+        {
+          "name": "Population and employment",
+          "text": "ISTAT provides population data and the regional Geoportal provides employment data to characterise the study area."
+        },
+        {
+          "name": "Mobility planning and services",
+          "text": "Municipal mobility plans identify planning status, while Ecomobs and available service information support the assessment of the mobility context."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "A geospatial database and network maps describe mobility services and routes around public transport stops.",
+        "A Connectivity Indicator and a selection of 30 priority hubs support the placement of passenger information kiosks.",
+        "A feasibility study compares three options for a regional platform managing static and real-time mobility data."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "Stop, route, itinerary and operator records are linked through joins in Tableau and organised with geographic data in QGIS. Municipalities with an approved Sustainable Urban Mobility Plan define the detailed study area. A circular buffer of 450 m is generated around each selected stop. Mobility points are counted by category, together with routes intersecting each buffer. A Connectivity Indicator gives equal importance to total mobility points and route counts. Comparisons, supplemented by available shared mobility information, identify 30 priority hubs for passenger information kiosks.",
+        "The buffer provides a consistent geometric catchment for comparing stops. The indicator combines the presence of mobility points and routes; it does not measure timetable frequency or passenger flows. The source database covers all transport modes, including stops outside Lombardy and services beyond local public transport."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/lombardy-data-mobility-platform/lombardy-method.png",
+          "caption": "Figure 1. Mobility hub selection methodology combining transport assessment, geospatial analysis, planning eligibility and connectivity ranking to identify priority hubs."
+        },
+        {
+          "image": "images/projects/movility/lombardy-data-mobility-platform/lombardy-study-area.png",
+          "caption": "Figure 2. The map shows the selection of municipalities for the detailed study area. Highlighted boundaries identify the spatial scope used to select stops and mobility infrastructure."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/lombardy-data-mobility-platform/lombardy-selected-hub.png",
+        "caption": "Figure 3. The GIS view shows an example of a selected hub and nearby mobility services. Point features and route lines support inspection of connection opportunities; interface labels are in Italian."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Network Detail",
+          "image": "images/projects/movility/lombardy-data-mobility-platform/lombardy-network-detail.png",
+          "caption": "Figure 4. A local view shows routes and connections in the mobility network. Line colours distinguish mapped features; the image does not quantify service frequency or passenger flows."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Priority hub selection",
+          "text": "Spatial analysis of mobility points and routes supports the selection of 30 priority hubs, providing a basis for passenger information kiosk placement."
+        },
+        {
+          "title": "Comparable connection opportunities",
+          "text": "The Connectivity Indicator enables consistent comparisons of services and routes within 450 m, highlighting differences in nearby connection opportunities."
+        },
+        {
+          "title": "Regional platform options",
+          "text": "The feasibility study compares three options for regional management of static and real-time mobility data within the 2021–2027 PR FESR Programme."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "30",
+          "label": "Priority hubs selected for information kiosks"
+        },
+        {
+          "value": "Index",
+          "label": "Connectivity Indicator developed for comparison"
+        },
+        {
+          "value": "Database",
+          "label": "Geospatial hub database and network maps"
+        },
+        {
+          "value": "3",
+          "label": "Regional data platform options compared"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Buffers represent geometric distances rather than actual walking routes. Barriers, crossings and accessibility require local checks.",
+        "The indicator measures the availability of mobility points and routes, rather than service frequency, connection quality or passenger flows. Network totals include stops outside Lombardy and services beyond local public transport."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Assessment of pilot results to guide subsequent expansion to other regional hubs.",
+        "Integration of additional modes and services, including shared mobility, taxis and demand-responsive transport, to provide real-time information across transport modes."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "public-transit-digital-observatory",
+    "titleLight": "",
+    "titleBold": "Calabria Region",
+    "subtitle": "Public Transit Digital Observatory",
+    "summary": "Interactive dashboards mapping urban and suburban bus and rail services across Calabria and integrating passenger data to support the Region in evidence-based public transport planning and service optimization.",
+    "tags": [
+      "GTFS",
+      "GIS",
+      "Public transport planning",
+      "Data-driven policy"
+    ],
+    "image": "images/projects/thumbnails/Cruscotto_cover.png",
+    "heroText": "The system provides a picture of where public transport services operate, where routes overlap, and how they are used. It enables the Region to redesign local public transport based on evidence.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "Calabria Region has started a data-driven review of its local public transport (TPL) services. The aim is to use the information already available to understand whether supply matches the needs of demand, to assess the efficiency and quality of the service, and to make the best use of the resources allocated to TPL. This calls for several sources to be read together: service usage, operation and performance, and territorial and mobility data.\nAfter developing the regional multimodal transport model, the team held a large body of supply and demand data. This project turns it into an interactive tool made of several dashboards, which maps urban and extra-urban bus and rail services across the region, links them to surveyed and simulated passengers, and helps public administration staff spot weak points and opportunities for rescheduling.",
+      "stats": [
+        {
+          "value": "153.000",
+          "label": "Approximatly scheduled vehicle-km for interurban services"
+        },
+        {
+          "value": "5",
+          "label": "Provinces covered, with filters by municipality, consortium, operator and line"
+        },
+        {
+          "value": "28",
+          "label": "TPL operators (interurban and urban)"
+        },
+        {
+          "value": "816",
+          "label": "Road based TPL lines (interurban and urban)"
+        }
+      ],
+      "meta": {
+        "Area": "Calabria, Italy: urban and extra-urban bus and regional rail.",
+        "Period": "2024-2025, based on GTFS data and operating programmes, with passenger data for a typical winter weekday.",
+        "Data": "GTFS and shapefiles, operating programmes, passenger surveys on bus lines and at rail stops, passengers simulated by the regional model.",
+        "Output": "Interactive Visualization System."
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Reviewing services with information scattered across sources",
+        "text": "The Region aims to redesign public transport services based on objective evidence, using indicators to assess how effectively supply meets demand and to evaluate operational efficiency and service quality. However, the required data are fragmented across multiple sources and formats, covering service usage (passenger volumes and ticketing data), operational performance (trips, vehicle-kilometers, municipalities and provinces served, and route overlaps), and territorial characteristics and demand patterns (school mobility and socio-economic data)"
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Integrated analysis of service supply, operational programmes and passenger demand",
+        "text": "GTFS timetables and model-derived shapefiles of bus and rail routes and stops were integrated with scheduled service programmes to compare GTFS-based supply against planned operations. The comparison was embedded in the dashboards to assess GTFS data consistency and visualize the geographical distribution and concentration of discrepancies across Calabria. Passenger demand was analyzed using survey data from bus routes, boarding and alighting figures at railway stations, and passenger volumes and passenger-kilometers estimated by the regional transport model."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "An integrated view of coverage, service overlaps and performance",
+        "text": "The dashboards address three key planning questions: where public transport services operate and how well they connect the territory; where routes overlap and opportunities exist for better coordination; and how line-level performance compares with the supply offered, highlighting potential areas for service improvement."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Timetables and network",
+          "text": "GTFS of the regional services, with shapefiles of bus and rail lines and stops extracted from the GTFS dataset used in the regional transport model."
+        },
+        {
+          "name": "Operating programmes",
+          "text": "Programmed trips and vehicle-km for a typical winter weekday in 2025, by line, operator and consortium, are compared with GTFS-based values to assess consistency and visualize the spatial distribution and density of any deviations in the dashboards."
+        },
+        {
+          "name": "Passenger surveys",
+          "text": "Passengers boarded and alighted on bus lines and at rail stops. For each line the value covers the whole itinerary and is the average of boardings and alightings."
+        },
+        {
+          "name": "GIS processing",
+          "text": "Shapefiles enriched with values used in the maps, such as the distance between each bus stop and the nearest rail station, which allows analysis within a variable radius around stations."
+        },
+        {
+          "name": "Simulated demand",
+          "text": "Passengers and passenger-km per line from the regional transport model, shown next to surveyed passengers in the line performance dashboard and compared with them through the GEH statistic."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "Use Case 1, supply summary: a regional map of extra-urban and urban bus and rail stops, with operators by colour and ridership by line thickness, plus tables of operators and lines and five ready analyses by province, municipality, consortium, operator and line.",
+        "Use Case 2, origin-destination relations served by bus and rail: services by origin or destination municipality or station with a radius for nearby bus stops, trips by arrival hour, and timetables with stops and travel times, with six ready analyses.",
+        "Use case 3, line performance: supply in the programme and in the model, surveyed and simulated demand with GEH, occupancy indicators and the hourly profile of trips."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "The dashboard is the front end of a data workflow: each step aligns a new source to the same lines, stops and places, so that officials can move from a regional overview down to a single line or relation: 1-Prepare the supply data: the GTFS data loaded into the regional transport model are exported as shapefiles of bus and rail lines and stops. Programmed supply, derived from the operators’ service schedules, is used as a reference to assess the consistency of the GTFS data imported into the model, which may differ slightly from the planned service; 2 - Enrich with GIS: GIS processing adds values useful for representation, such as the distance of every bus stop from the nearest rail station, so users can look at all services around a station within a radius they choose; 3- Attach demand and indicators: surveyed passengers, boardings and alightings are linked to lines and rail stops, and passengers and passenger-km simulated by the model are added. Indicators include seats offered, occupancy, passenger-km per seat-km and GEH."
+      ],
+      "figures": []
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/public-transit-digital-observatory/supply-summary.png",
+        "caption": "Supply summary: map of regional extra-urban bus and rail services, tables of operators and lines, and filters by province, municipality, consortium and survey presence"
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Supply summary",
+          "image": "images/projects/movility/public-transit-digital-observatory/supply-summary-1.png",
+          "caption": "Supply summary: map of regional extra-urban bus and rail services, tables of operators and lines, filtered to a selected geographic area."
+        },
+        {
+          "title": "O-D pairs served by road and rail",
+          "image": "images/projects/movility/public-transit-digital-observatory/OD-pairs-services.png",
+          "caption": "For a pair of municipalities or stations, the bus and rail services, trips by arrival hour and trip timetables with stops and durations"
+        },
+        {
+          "title": "Line performance overview",
+          "image": "images/projects/movility/public-transit-digital-observatory/line-performance-overview.png",
+          "caption": "Supply in the programme and in the model, surveyed and simulated passengers with GEH, occupancy indicators and the hourly profile of trips"
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Operators show different levels of service use",
+          "text": "Among the operators considered, similar levels of service supply correspond to different levels of passenger use. This highlights differences in service performance and helps identify services that may warrant further analysis."
+        },
+        {
+          "title": "Trip frequency and service use do not always peak at the same times",
+          "text": "In some cases, the distribution of departures throughout the day does not align with patterns of service use, with seat-km utilisation reaching its highest levels during different time periods. This may point to an opportunity to review departure times and better align service provision with demand."
+        },
+        {
+          "title": "Service coverage is uneven across the territory",
+          "text": "The regional map shows services concentrated along the two coasts and around the main urban areas, with sparser coverage inland. The distance between each bus stop and the nearest railway station provides an indication of accessibility and potential opportunities for bus–rail connections."
+        },
+        {
+          "title": "Low service frequency is evident on individual routes",
+          "text": "In some areas, most municipality pairs served by a route have only around three trips per day, spread between the early morning and evening. This makes weaker links and potential opportunities for bus–rail integration easier to identify."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "151,998",
+          "label": "Programmed vehicle-km on a winter weekday in 2025, all provinces and consortia"
+        },
+        {
+          "value": "64,200",
+          "label": "Passengers surveyed on the lines, counted over whole itineraries"
+        },
+        {
+          "value": "6.83",
+          "label": "GEH between simulated and surveyed passengers, as an aggregate indicator"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Information on trips and vehicle-km depend on the quality of the GTFS, so results must be verified before they inform decisions.",
+        "Moving to decisions based on objective evidence requires stronger information flows, shared with operators."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Set up shared information flows: trip-level frequentation surveys at fixed intervals during the ",
+        "Integrate ticket and subscription sales, school demand and socio-economic data"
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "csr-digitale",
+    "titleLight": "",
+    "titleBold": "CSR Digitale",
+    "subtitle": "Regional Integrated Digital Ticketing Platform",
+    "summary": "CSR Digitale is Lombardy’s integrated digital ticketing platform, connecting operator systems, transport service data and fares to manage digital tickets and passes and support journey reconstruction and best-fare calculation.",
+    "tags": [
+      "Account Based Ticketing",
+      "Digital Ticketing",
+      "Interoperability",
+      "Best Fare",
+      "Journey Reconstruction"
+    ],
+    "image": "images/projects/thumbnails/csr-card.png",
+    "heroText": "From ticket issuance and validation events to reconstructed journeys and fare calculation, CSR Digitale connects transport operators through a common regional digital ticketing platform.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "CSR Digitale is Lombardy’s integrated digital ticketing platform for pre-paid tickets and post-paid bank-card journeys. It connects operator systems, service data and fare rules to support ticket management, journey reconstruction, best-fare calculation and revenue-allocation reporting. APIs, a mobile SDK and a Travel Planner provide supporting tools.",
+      "stats": [
+        {
+          "value": "3",
+          "label": "Integrated fare products: STIBM, IVOL and IVOP"
+        },
+        {
+          "value": "2",
+          "label": "Ticketing models: pre-paid and post-paid"
+        },
+        {
+          "value": "2",
+          "label": "Pre-paid products: tickets and subscriptions"
+        },
+        {
+          "value": "1",
+          "label": "Native SDK platforms: iOS and Android"
+        }
+      ],
+      "meta": {
+        "Area": "Lombardy, Italy; post-paid pilot within the Milan–Monza integrated fare area",
+        "Period": "In progress",
+        "Data": "TPLombardia, operator ticketing and validation systems, fare catalogues, fare-zone mapping, payment outcomes",
+        "Output": "Digital ticketing platform and supporting tools"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Making digital tickets interoperable across operators",
+        "text": "Separate operator systems fragment digital ticket management and limit fare integration across services. The challenge is to create a common regional platform that connects tickets, validations and journeys, supporting integrated fares and revenue allocation based on actual network use."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Ticket lifecycles, transport services and fare rules",
+        "text": "The analysis covers pre-paid and post-paid ticket lifecycles, operator interactions, validation events and payment outcomes. Stops, routes, timetables and geometries are combined with fare catalogues and zones to define the information needed for journey reconstruction and fare calculation."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "A shared platform with common integration services",
+        "text": "CSR Digitale brings ticket management, journey reconstruction and fare calculation into a common regional system. Application programming interfaces (APIs) connect operators, the mobile SDK supports secure digital ticket presentation, and the Travel Planner supports route simulation and fare checks."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Transport service data",
+          "text": "TPLombardia and operators provide stops, routes, trips, timetables and geometries through standard exchange formats, including General Transit Feed Specification (GTFS) and NeTEx."
+        },
+        {
+          "name": "Fare catalogues and zones",
+          "text": "Regional fare catalogues and fare-area mapping provide STIBM, IVOL and IVOP ticket products, prices, validity areas and applicable exceptions."
+        },
+        {
+          "name": "Ticketing and validation records",
+          "text": "Operator systems provide account references, ticket issuance and activation records, validation events and service identifiers used for ticket management and journey reconstruction."
+        },
+        {
+          "name": "Payment aliases and outcomes",
+          "text": "Operator and payment systems provide payment aliases and charge or reversal outcomes to support reconciliation of post-paid transactions across operators."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "The CSR Digitale platform provides a common regional system for digital ticket management, journey reconstruction, fare calculation and reporting for transport operators and regional authorities on ticket sales, validations and actual network use.",
+        "A suite of 45 integration APIs and a mobile SDK support operator system connections, ticket activation, signed barcode generation and cryptographic key management.",
+        "A regional Travel Planner supports operators and CSR Digitale with multimodal itinerary simulation, fare checks and journey reconstruction."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "Service data, fare catalogues, zones and operator records establish the platform’s reference data. Operator systems exchange ticket issuance, activation and validation information with CSR Digitale through APIs. For post-paid journeys, payment aliases link validation events across operators. The platform uses service and validation data to reconstruct journeys and apply fare rules, including best-fare logic, while recording payment outcomes. Reconstructed travel supports revenue-allocation reporting. The mobile SDK supports secure ticket presentation; the Travel Planner assists route simulation and fare checks.",
+        "Account-based ticketing links digital ticket information to regional account references. Stable stop, line and trip identifiers and complete route geometries support journey reconstruction. The SDK provides shared app security functions; the Travel Planner supports operational simulations."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/csr-digitale/csr-scope.png",
+          "caption": "Figure 1. Scope of the pilot, covering IVOL and IVOP across Lombardy and STIBM and EMV in the Milan and Monza area, followed by the full regional rollout of integrated digital ticketing."
+        },
+        {
+          "image": "images/projects/movility/csr-digitale/csr-ticket-flow.png",
+          "caption": "Figure 2. Prepaid and postpaid ticketing workflows, showing the roles of passengers, transport operators and CSR Digitale in validation, journey reconstruction and fare management."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/csr-digitale/csr-ticketing-model.png",
+        "caption": "Figure 3. CSR Digitale architecture, showing the platform’s core functions and API integration with transport operators’ back-end systems, passenger apps, validators and ticket inspection tools."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Integration Services",
+          "image": "images/projects/movility/csr-digitale/csr-api-overview.png",
+          "caption": "Figure 4. The overview identifies 45 APIs, split into 37 pre-paid and 8 post-paid APIs, plus one SDK with six dedicated methods. SDK methods are counted separately; labels are in Italian."
+        },
+        {
+          "title": "Travel Planner",
+          "image": "images/projects/movility/csr-digitale/csr-travelplanner.png",
+          "caption": "Figure 5. Regional Travel Planner showing alternative multimodal routes, connections, journey times and associated fares, with itineraries displayed on an interactive map."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Regional ticketing framework",
+          "text": "A common platform framework covers pre-paid tickets and passes and post-paid bank-card journeys, supporting interoperability between transport operators."
+        },
+        {
+          "title": "Journey and fare integration",
+          "text": "Journey reconstruction connects validation events with transport services, supporting best-fare calculation and reporting for revenue allocation."
+        },
+        {
+          "title": "Operator integration tools",
+          "text": "The integration package comprises 45 APIs and one mobile SDK with six dedicated methods for activation, signed barcodes and security functions."
+        },
+        {
+          "title": "Operational Travel Planner",
+          "text": "A supporting Travel Planner compares multimodal itineraries, stops, transfers, travel times and fares for operator simulations and central-system needs."
+        },
+        {
+          "title": "Reporting for operators and authorities",
+          "text": "Reporting provides transport operators and regional authorities with information on ticket sales, validations and reconstructed journeys, supporting monitoring and revenue allocation."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "45",
+          "label": "Ticketing APIs in the supplied overview"
+        },
+        {
+          "value": "37",
+          "label": "Pre-paid ticketing APIs"
+        },
+        {
+          "value": "8",
+          "label": "Post-paid ticketing APIs"
+        },
+        {
+          "value": "1",
+          "label": "Mobile SDK with six dedicated methods"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Journey reconstruction and fare attribution depend on complete, current service and fare data and coherent validation identifiers. Missing events can require inferred journey legs.",
+        "The pilot limits post-paid bank-card journeys to the Milan–Monza integrated fare area and excludes fare concessions. The supplied material provides no measured adoption, service availability or fare-accuracy results."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Operator integration and testing, comparison of central fare calculations with operator results, refinement of business rules and configurations.",
+        "Progressive extension of platform interoperability, maintenance of service and fare data, integration with operator mobile applications."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "doha-transport-modelling",
+    "titleLight": "",
+    "titleBold": "Modelling The Future Of Doha",
+    "subtitle": "From Data To Traffic Simulation",
+    "summary": "The project combines monitoring data, road network information and travel demand to update the metropolitan Doha traffic model, supporting flow forecasts, scenario assessments and detailed junction analysis.",
+    "tags": [
+      "Transport Modelling",
+      "Traffic Monitoring",
+      "Microsimulation",
+      "Data Quality"
+    ],
+    "image": "images/projects/thumbnails/doha-card.png",
+    "heroText": "From quality-checked traffic counts to calibrated demand and junction simulations, the model supports network assessments and traffic management during exceptional events.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "The project updates the transport model for metropolitan Doha, Qatar, using traffic monitoring observations, road network characteristics and travel demand. Network simulation and detailed junction models support traffic flow analysis, forecasting and assessment of interventions, including during exceptional events.",
+      "stats": [
+        {
+          "value": "10,895",
+          "label": "Detector entries in the inventory tables"
+        },
+        {
+          "value": "2",
+          "label": "Network and junction simulation scales"
+        },
+        {
+          "value": "5 min",
+          "label": "Nominal interval in UnclassifiedData"
+        },
+        {
+          "value": "1 min",
+          "label": "Nominal interval in UnclassifiedData_STAGE"
+        }
+      ],
+      "meta": {
+        "Area": "Metropolitan Doha, Qatar",
+        "Period": "Selected historical dates in 2023 and 2024",
+        "Data": "Detector inventories, traffic counts and speeds, day-type calendar, road network, O/D demand, real-time monitoring feeds",
+        "Output": "Calibrated network and junction simulation models"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Integrating monitoring observations into a usable traffic model",
+        "text": "Multiple monitoring technologies produce overlapping records, gaps and inconsistent traffic counts. The challenge is to update the network and travel demand model so that it supports strategic analysis, flow forecasting and operational assessments during exceptional events."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Road network, travel demand and monitoring data",
+        "text": "The analysis covers road network attributes, Origin–Destination (O/D) demand matrices, traffic counts and speeds. Checks assess availability, temporal coverage and consistency across six day types. Selected junctions are examined in detail to identify vehicle interactions and local bottlenecks."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Connecting network calibration and junction simulation",
+        "text": "The approach combines data reliability checks, macroscopic model calibration and junction microsimulation. PTV Visum and PTV Optima support network modelling and monitoring integration; PTV Vissim provides detailed assessments of vehicle movements at ten selected junctions."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Detector inventories",
+          "text": "Two database inventory tables list 10,198 and 697 detector entries, with identifiers and associations to count locations and the model."
+        },
+        {
+          "name": "Traffic observations and feeds",
+          "text": "Historical count tables and real-time monitoring feeds provide vehicle counts, speeds and vehicle classifications where available; overlapping sources are not independent observations."
+        },
+        {
+          "name": "Day-type calendar",
+          "text": "The calendar distinguishes Ramadan weekdays and Fridays/Saturdays, non-Ramadan school and non-school weekdays, and non-Ramadan Fridays and Saturdays."
+        },
+        {
+          "name": "Model network and O/D demand",
+          "text": "The existing model provides link and node geometries, capacity, free-flow speed, lane counts and Origin–Destination demand matrices."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "An updated and calibrated macroscopic model represents the mobility network and supports analysis of changing traffic flows.",
+        "Statically and dynamically calibrated O/D matrices align travel demand with the traffic counts used for calibration.",
+        "Ten PTV Vissim microsimulation models support detailed junction assessments and comparison of potential traffic improvements."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "Detector inventories are matched to count locations and model links. Traffic counts and speeds are aggregated by detector, date and hour, checked for completeness and consistency, and grouped into six day types. Reliable counts support updates to the network and static O/D calibration with T-Flow Fuzzy. Dynamic Origin–Destination Matrix Estimation (DODME) then adjusts demand using vehicle propagation times and the dynamic assignment matrix from the PTV Visum DAM add-in. Observed and simulated flows are compared using GEH; ten PTV Vissim models support detailed junction analysis.",
+        "Reliability checks operate first at detector level and then at count location level. They assess completeness, flow-to-capacity ratios, changes between consecutive hours and daytime versus nighttime flows. Sensitivity analysis adjusts selection thresholds to the dataset; overlapping sources are assessed without summing them as independent observations."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/doha-transport-modelling/doha-calibration-workflow.png",
+          "caption": "Figure 1. The workflow shows preparation, dynamic O/D calibration and final export. Follow the feedback loops to see how bottleneck checks and performance indicators guide further calibration."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/doha-transport-modelling/doha-coverage.png",
+        "caption": "Figure 2. The map shows the geographical coverage of the modelled road network. Lines identify represented roads; they do not indicate traffic volumes or calibration quality."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Junction Simulation",
+          "image": "images/projects/movility/doha-transport-modelling/doha-junction-simulation.png",
+          "caption": "Figure 3. A PTV Vissim view shows vehicle movements at a selected junction. The image illustrates local simulation detail rather than a quantified improvement."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Updated network model",
+          "text": "Integration with monitoring data provides an updated metropolitan model for traffic analysis, forecasts and scenario assessments, including exceptional events."
+        },
+        {
+          "title": "Calibrated day types",
+          "text": "Demand and model parameters are calibrated across six day types. Agreement is assessed through the share of links with GEH at or below 5."
+        },
+        {
+          "title": "Junction analysis models",
+          "text": "Ten PTV Vissim models represent vehicle interactions and local bottlenecks, providing a basis for comparing potential traffic improvements."
+        },
+        {
+          "title": "Validated detector data",
+          "text": "A total of 6,439 detectors meet the applied validation criteria. Selection depends on the reliability thresholds and modelling checks used."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "6,439",
+          "label": "Detectors meeting applied validation criteria"
+        },
+        {
+          "value": "10",
+          "label": "PTV Vissim junction models developed"
+        },
+        {
+          "value": "6",
+          "label": "Day types used for model calibration"
+        },
+        {
+          "value": "GEH ≤ 5",
+          "label": "Threshold used to assess flow agreement"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Data selection depends on reliability thresholds adjusted through sensitivity analysis. Real-time representation depends on the availability, quality and continuity of monitoring feeds.",
+        "Microsimulation covers selected junctions and requires updates when geometry, traffic control or demand changes. The source gives no percentage of links meeting GEH ≤ 5, so the threshold alone does not quantify calibration performance."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Regular updates to the network, O/D demand and source datasets to reflect changes in metropolitan mobility.",
+        "Extension of microsimulation to other priority junctions, comparison of proposed interventions."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "omnibus-demand-responsive-transport",
+    "titleLight": "Demand Responsive Transport",
+    "titleBold": "Omnibus",
+    "subtitle": "Shared Mobility For Underserved Rural Communities",
+    "summary": "Omnibus uses spatial, transport and stakeholder data to design shared, demand-responsive journeys linking rural communities in Reggio Calabria to essential services and public transport.",
+    "tags": [
+      "Demand-Responsive Transport",
+      "Inclusive Mobility",
+      "Public Transport",
+      "Digital Platforms"
+    ],
+    "image": "images/projects/thumbnails/omnibus-cover.png",
+    "heroText": "From local mobility needs and transport mapping to digitally managed bookings and shared journeys, Omnibus connects dispersed rural origins to essential destinations and transport hubs.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "Omnibus provides a digitally managed demand-responsive transport (DRT) service in the Metropolitan City of Reggio Calabria, with an initial pilot in the Area Grecanica. Demographic data, transport mapping and stakeholder input inform connections to essential services and existing public transport. The model offers a basis for adaptation to similar low-demand areas.",
+      "stats": [
+        {
+          "value": "15",
+          "label": "Municipalities involved in the pilot launch"
+        },
+        {
+          "value": "38,674",
+          "label": "Area Grecanica residents (ISTAT 2022)"
+        },
+        {
+          "value": "3",
+          "label": "Passenger, driver and control centre applications"
+        },
+        {
+          "value": "2",
+          "label": "Booking channels: web app and call centre"
+        }
+      ],
+      "meta": {
+        "Area": "Metropolitan City of Reggio Calabria, Calabria, Italy; pilot in the Area Grecanica (15 municipalities).",
+        "Period": "Pilot: 2 August 2024–15 February 2025; demographic data: 2022.",
+        "Data": "ISTAT 2022, public transport mapping, regional planning documents, stakeholder questionnaires, user personas",
+        "Output": "Service model, business plan, digital platforms"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Connecting dispersed communities to essential destinations",
+        "text": "Low-demand areas in Reggio Calabria combine dispersed settlements with limited public transport. Scheduled services struggle to meet demand that varies across places and times, limiting access to essential destinations for residents with fewer travel alternatives."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Local mobility needs, transport provision and target users",
+        "text": "The analysis combines ISTAT 2022 demographics, mapped transport services and operators, low-demand areas, local points of interest and planning documents. Stakeholder questionnaires and user personas describe mobility needs, including those of older people and people with disabilities."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "A coordinated service model supported by digital platforms",
+        "text": "A many-to-few service connects dispersed origins to key destinations and existing public transport. Three applications support passengers, drivers and the control centre, while the operating model, business plan and communication strategy define how the service works."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "ISTAT 2022",
+          "text": "Demographic data from ISTAT describe the population of the Area Grecanica, reported as 38,674 residents."
+        },
+        {
+          "name": "Transport and spatial information",
+          "text": "Local transport mapping provides existing services, operators, low-demand areas, points of interest and transport connections."
+        },
+        {
+          "name": "Planning and regulatory documents",
+          "text": "Regional planning documents, the Sustainable Urban Mobility Plan and relevant regulations provide the planning and operating context."
+        },
+        {
+          "name": "Stakeholder and user input",
+          "text": "Consultations with local authorities and third-sector organisations, questionnaires and user personas identify mobility needs and potential destinations."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "Service design and business plan defining target areas, origins and destinations, operating rules, governance and the balance between fares and public funding.",
+        "Integrated digital platforms supporting passenger bookings and payments, driver communication, route optimisation and control centre monitoring.",
+        "Implementation framework supporting service branding, communication, stakeholder engagement, pilot launch and operational monitoring."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "The workflow starts with demographic data, transport mapping and a review of local planning and regulatory documents. Stakeholder consultations, questionnaires and user personas identify travel needs and key destinations. These inputs inform the many-to-few service model, governance arrangements, business plan and communication strategy. Passenger, driver and control centre applications then support bookings, payments, real-time communication and route optimisation. Pilot monitoring records service use, booking channels and journey patterns to inform service adjustments.",
+        "The many-to-few model connects dispersed origins to a limited set of essential destinations and transport hubs. A responsive web app and a dedicated call centre provide complementary booking channels. Advance and real-time bookings support flexibility, while assisted booking helps retain access for users who do not rely on digital tools."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/omnibus-demand-responsive-transport/omnibus-app.png",
+          "caption": "Figure 1. Front-end interface of the Omnibus mobile application, illustrating the user-facing design and core features for booking on-demand transport"
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/omnibus-demand-responsive-transport/omnibus-service-coverage.png.png",
+        "caption": "Figure 2. Schematic links between dispersed origins in the Area Grecanica and essential destinations and transport hubs."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "People",
+          "image": "images/projects/movility/omnibus-demand-responsive-transport/omnibus-people.png",
+          "caption": "Figure 3. Target user groups of the Omnibus initiative, highlighting the diverse people it aims to serve."
+        },
+        {
+          "title": "Dashboard",
+          "image": "images/projects/movility/omnibus-demand-responsive-transport/omnibus-dashboard.png",
+          "caption": "Figure 4. Mobility demand dashboard showing reported registered-user demographics and passenger counts by age group during the pilot."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Pilot service uptake",
+          "text": "The pilot records 489 completed trips and 197 registered users between 2 August 2024 and 15 February 2025, with reported average occupancy of 2.43 passengers per trip."
+        },
+        {
+          "title": "Assisted booking preference",
+          "text": "The call centre is the preferred booking channel. Users aged 40–60 are the most frequent bookers, supporting the continued role of assisted access."
+        },
+        {
+          "title": "Transport hub connections",
+          "text": "Origins and destinations concentrate around interchange hubs, including Reggio Calabria Centrale station, indicating a connecting role between rural communities and the transport network."
+        },
+        {
+          "title": "Limited user feedback",
+          "text": "The dedicated feedback feature sees limited use during the pilot, restricting systematic assessment of passenger satisfaction and improvement needs."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "489",
+          "label": "Trips completed during the pilot"
+        },
+        {
+          "value": "197",
+          "label": "Registered users"
+        },
+        {
+          "value": "2.43",
+          "label": "Average passengers per trip"
+        },
+        {
+          "value": "89.57%",
+          "label": "Trips on working days"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "The dedicated feedback feature sees limited use during the pilot. The scarcity of direct feedback limits systematic assessment of passenger satisfaction, recurring issues and suggested improvements.",
+        "The observation period covers 2 August 2024–15 February 2025. It does not support a full assessment of seasonal demand, long-term travel habits or the service response to changing needs."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Continuous monitoring of trip volumes, booking channels, origins and destinations and user profiles, targeted adjustments to coverage and vehicle allocation, accessible post-trip feedback and call centre questionnaires.",
+        "Closer coordination of DRT timetables and connections with rail and other public transport services, stronger first- and last-mile links to major interchange hubs.",
+        "Replication in similar rural and sparsely populated areas, adaptation to local demand, geography, existing transport services and available resources."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "multimodal-transport-model",
+    "titleLight": "",
+    "titleBold": "Mobility Scenario Lab",
+    "subtitle": "A Multimodal Transport Model for Calabria",
+    "summary": "How a multimodal simulation model of Calabria was rebuilt from mobile-phone, vehicle and public transport data, and what it gives the Region for planning local public transport.",
+    "tags": [
+      "Transport modelling",
+      "Big data",
+      "Scenario analysis"
+    ],
+    "image": "images/projects/thumbnails/Modello_Calabria_cover.png",
+    "heroText": "A regional multimodal transport model reproduces how people move across Calabria. It gives the Region an objective base to tune services and compare policy and service options before choosing.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "In response to changing mobility needs in Calabria, driven by demographic shifts and evolving travel patterns, the project develops a multimodal transport model that combines big data with traffic counts, boarding data and census statistics, while capturing both school-term and summer travel patterns. This enables the Region to assess transport service needs, compare different scenarios and make evidence-based planning decisions.",
+      "stats": [
+        {
+          "value": "1,83 M",
+          "label": "Residents in 404 municipalities"
+        },
+        {
+          "value": "997",
+          "label": "Internal zones + 46 external + 122 P&R zones"
+        },
+        {
+          "value": "6",
+          "label": "Scenarios: school term/summer, weekday/Sat/Sun"
+        },
+        {
+          "value": "17,000",
+          "label": "Approx. kilometers of road network modelled"
+        }
+      ],
+      "meta": {
+        "Area": "Calabria, Italy, with neighbouring regions, the rest of Italy and the Strait of Messina",
+        "Period": "October 2023 (school term) and August 2024 (summer)",
+        "Data": "Mobile-phone and floating-car matrices, traffic counts, GTFS timetables, boarding data, census data",
+        "Output": "Multimodal demand matrices by scenario, time band and mode, and a calibrated model of road and public transport networks"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Planning local public transport on an outdated picture",
+        "text": "The Region needs to adapt services to a population that is shrinking and ageing, and to demand that changes by season, day and hour. But the last regional matrices date, traditional surveys are costly and quickly outdated, and public transport boarding data are aggregated and incomplete. There is no single, consistent view of how people travel and of how supply, fares and infrastructure shape their choices."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Big data checked against observed counts",
+        "text": "Hourly origin-destination matrices from mobile-phone and floating-car data for two periods, traffic counts, boarding and alighting data on bus, rail and ferry services, commuting and census data, school locations and GTFS timetables. Each source fills a gap in the others and is used either to build or to check the model."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "Rebuild, split, assign, check",
+        "text": "The classic four-stage model is adapted: generation and distribution come directly from the corrected phone matrix, with school trips estimated separately. Demand is then split between car, public transport and Park & Ride, assigned to the road and public transport networks, and calibrated against observed data."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Big Data",
+          "text": "Mobile-phone matrices: hourly origin-destination trips from mobile-network data; Floating-car data: sampled trips from vehicle black boxes, for private and commercial vehicle."
+        },
+        {
+          "name": "Observed data",
+          "text": "Road counts, bus, rail and ferry boarding and alighting data, and ticket revenues, used to calibrate and validate the model."
+        },
+        {
+          "name": "Transport supply",
+          "text": "Commercial road graph, regional rail graph, GTFS timetables for bus and rail services, ferry services for the Strait of Messina crossings, and fare systems from the regional programme."
+        },
+        {
+          "name": "Territorial data",
+          "text": "Population on census cells, commuting matrices, upper-secondary school locations and enrolment."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "Demand matrices for six scenarios (school term and summer, weekday, Saturday and Sunday), by time band (6 in winter, 5 in summer, plus daily totals) and by mode: car, public transport and Park & Ride.",
+        "A calibrated modal split model, integrating road and public transport networks, fares, Park & Ride zones, ready to load and evaluate any demand scenario",
+        "Insights into seasonal and hourly service variations, travel demand between zones, school-related mobility by zone, and road and service network loading to identify congestion and spare capacity"
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "The model was built in five steps, and each step is based on certain assumptions: 1-Set requirements and scenarios: a static, macroscopic, multimodal model on four-stage logic, covering the region and the Strait, able to zoom into main urban areas, for strategic planning. Six scenarios were defined by period, day type and time band;\n2- Build zones and supply: municipalities were zoned by size and demographic informations, giving 997 internal zones, 46 external zones and 122 Park & Ride zones. The road graph and rail graph were completed with GTFS timetables for bus, rail and ferry and with fare systems;\n3-Reconstruct the demand: demand is reconstructed starting from the mobile-phone O-D matrix and segmented into students, long-distance trips (over 30 km) and short-distance trips (under 30 km). Student trips are estimated separately, based on school locations and enrolment and on the school-age population. Matrices for each time band are derived from the peak matrix using the daily profile from phone data, and heavy-goods vehicle trips are added using floating-car data; \n4-Split by mode and assign: a logit model shares demand between car, public transport and Park & Ride using time, cost, access, waiting, walking, transfers and fares, with different coefficients depending on demand segment (students, trips over 30 km, trips under 30 km) and period (winter, summer). The model is run separately for each time band. Cars are assigned by equilibrium, so no user gains by changing route. Public transport uses the timetable-based procedure, which captures waiting times and transfers between services;\n5-Calibrate and validate: mode-choice parameters start from the literature and good practice and were tuned against expected shares, line boardings and road counts. Model fit was assessed using R² and GEH against observed road traffic and boarding data."
+      ],
+      "figures": []
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/multimodal-transport-model/desire-lines-winter-weekday-1.png",
+        "caption": "Desire lines for the winter weekday morning peak across the whole region, showing the main flows between zones."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "",
+          "image": "images/projects/movility/multimodal-transport-model/desire-lines-winter-weekday-2.png",
+          "caption": "Desire lines for the winter weekday morning peak in the Crotone, Catanzaro-Lamezia and upper Tyrrhenian Cosenza area"
+        },
+        {
+          "title": "",
+          "image": "images/projects/movility/multimodal-transport-model/traffic-flow.png",
+          "caption": "Public transport passenger flows and private road vehicle flows obtained by assigning the demand matrix to the network."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Demand varies significantly by season and day type",
+          "text": "Overall mobility demand increases substantially in summer, particularly on Sundays, highlighting the importance of differentiating transport services by season, day type and time band"
+        },
+        {
+          "title": "The modal share",
+          "text": "The modal share of TPL is relatively low compared with the national context. Car use remains clearly predominant, while TPL plays a more significant role during winter weekdays and in the main urban centres."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "3.7 M",
+          "label": "Daily trips, winter weekday"
+        },
+        {
+          "value": "3",
+          "label": "Transport modes modelled (Car, TPL, P&R)"
+        },
+        {
+          "value": "5",
+          "label": "Simulated winter weekday time bands"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Phone data have thinner coverage in inland and less urbanized areas. Low-reliability municipalities were corrected, but flows there remain more uncertain.",
+        "Despite the availability of standardized data, a partial manual reconstruction of the supply is still required to ensure a complete representation of the network.",
+        "There is potential to further improve data governance, particularly regarding the availability, completeness and integration of boarding and alighting data."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Refine and update the model with new counts, updated gtfs and boarding data.",
+        "Add the air transport matrix with connectors from the external zones."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "ucronia-geo-waste-digital-twin",
+    "titleLight": "",
+    "titleBold": "UCRONIA",
+    "subtitle": "Rome's Geo-Waste Digital Twin",
+    "summary": "A GIS-based Digital Twin of Rome that gives the operations room of AMA, the city's waste management company, one geo-referenced view of fleets, assets and citizen reports.",
+    "tags": [
+      "Digital Twin",
+      "GIS",
+      "IoT",
+      "Smart Waste"
+    ],
+    "image": "images/projects/thumbnails/ucronia-cover.png",
+    "heroText": "From vehicle GPS, sensors and citizen reports to one live map of Rome, so the control room can see critical points, check services and act first where it matters.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "UCRONIA gives the AMA central operations room a Digital Twin of Rome, built on fleet GPS, IoT sensors, citizen reports and service planning data. It shows where the critical points are today, whether planned services are delivered and which reports need action first. The next step is to extend it to more assets and add predictive analytics.",
+      "stats": [
+        {
+          "value": "24/7",
+          "label": "Control room monitoring of the city"
+        },
+        {
+          "value": "4",
+          "label": "Operational data sources on one platform"
+        },
+        {
+          "value": "2D/3D",
+          "label": "Views of the Digital Twin of Rome"
+        },
+        {
+          "value": "1",
+          "label": "Geo-referenced map replacing separate tools"
+        }
+      ],
+      "meta": {
+        "Area": "Rome, Lazio, Italy",
+        "Period": "2024–present",
+        "Data": "Fleet GPS, IoT sensors, citizen reports, service planning data, satellite imagery",
+        "Output": "Digital Twin, dashboards and procedures"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Fragmented visibility over a city-scale service",
+        "text": "Waste collection and street cleaning in Rome involve fleets, facilities and field teams spread over a large area. Reports, vehicle positions and asset data were handled in separate tools, so coordinating interventions and measuring service levels in time was hard."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Fleet, sensor, report and planning data",
+        "text": "GPS positions of the collection fleet, IoT sensor data from bins, roll-off containers and other assets, geo-referenced citizen reports, service planning data and satellite imagery. All are mapped on a GIS model of Rome and refreshed in near real time."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "A digital twin backed by a new operating model",
+        "text": "We start from a technology assessment and a benchmark of comparable operations centres. We then design the to-be technology and process model, define KPIs and dashboards, and set the procedures the control room uses to manage reports and interventions."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Fleet GPS",
+          "text": "GPS positions of AMA collection vehicles, used to follow routes and check that planned services are carried out."
+        },
+        {
+          "name": "IoT sensors",
+          "text": "Status and performance data from sensors on Cestò smart bins, roll-off containers and other company assets."
+        },
+        {
+          "name": "Citizen reports",
+          "text": "Geo-referenced reports of issues across the city, managed by the control room from intake to resolution."
+        },
+        {
+          "name": "Base maps and satellite imagery",
+          "text": "2D and 3D maps of Rome with road network and service areas, plus satellite imagery used to detect illegal dumps."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "A live 2D/3D Digital Twin of Rome that shows reports, critical points and company assets on one map.",
+        "Operational dashboards with KPIs on service levels and criticalities, used to check that planned services are delivered.",
+        "Operating procedures that guide the control room from the intake of a report to the closure of the intervention."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "The work starts with a technology assessment of AMA's existing systems, data sources and sensors, to see which data are available, how often they are updated and how they can be integrated. KPIs on service levels and criticalities are then defined, and the organisation is compared with other operations centres. On this basis, the target architecture of the Digital Twin and the process model of the control room are designed. Finally, dashboards are set up and procedures are defined to manage reports from receipt to closure."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/ucronia-geo-waste-digital-twin/ucronia-workflow.png",
+          "caption": "Figure 1. The four project phases, from technology assessment to dashboards and operating procedures."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/ucronia-geo-waste-digital-twin/ucronia-digital-twin.png",
+        "caption": "Figure 2. The UCRONIA operational interface, a Digital Twin of Rome shown here in 2D. Reports, critical points and company assets appear on the same geo-referenced map, with the highest density in the city centre. Place names are in Italian."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Reports",
+          "image": "images/projects/movility/ucronia-geo-waste-digital-twin/ucronia-reports.png",
+          "caption": "Figure 3. Dashboard for monitoring citizen reports and issues across the city, with vehicles and points of interest in each area. Labels are in Italian."
+        },
+        {
+          "title": "IoT containers",
+          "image": "images/projects/movility/ucronia-geo-waste-digital-twin/ucronia-iot-containers.png",
+          "caption": "Figure 4. Cockpit for managing Cestò smart bins and roll-off containers with data from integrated IoT sensors. Labels are in Italian."
+        },
+        {
+          "title": "Illegal dumps",
+          "image": "images/projects/movility/ucronia-geo-waste-digital-twin/ucronia-illegal-dumps.png",
+          "caption": "Figure 5. Satellite data on illegal waste dumps in several areas of Rome, verified through on-site inspections. Labels are in Italian."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "One view of the city",
+          "text": "The control room sees reports, assets and service status on a single geo-referenced map of Rome, instead of separate systems."
+        },
+        {
+          "title": "Structured report management",
+          "text": "Standard procedures link each report to an intervention, making it easier to coordinate field teams and track service levels."
+        },
+        {
+          "title": "Near-real-time monitoring",
+          "text": "GPS and IoT data let operators follow service delivery as it happens and spot criticalities early."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "+37%",
+          "label": "Mechanised street cleaning and leaf collection"
+        },
+        {
+          "value": "+30%",
+          "label": "Vehicle availability"
+        },
+        {
+          "value": "-24.7%",
+          "label": "Citizen reports, 2025 vs 2024"
+        },
+        {
+          "value": "+50%",
+          "label": "Separate waste collection, monthly data"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Coverage depends on the sensors installed: assets without GPS or IoT devices are not yet visible in the Digital Twin.",
+        "Data are updated in near real time rather than in real time, and update frequency varies by source."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Extension of the Digital Twin to further assets and data sources.",
+        "Predictive analytics to anticipate operational issues and plan interventions."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "anas-predictive-travel-time",
+    "titleLight": "",
+    "titleBold": "Predictive Travel Time",
+    "subtitle": "Machine Learning For Travel Time Forecasting",
+    "summary": "A Machine Learning model combines connected vehicle data and road network information to forecast travel times on selected A90 and A91 motorway sections in the Rome area, with outputs shown in an interactive dashboard.",
+    "tags": [
+      "Travel Time Forecasting",
+      "Machine Learning",
+      "Floating Car Data",
+      "Traffic Monitoring"
+    ],
+    "image": "images/projects/thumbnails/anas-card.png",
+    "heroText": "From traffic observations on 500 m road segments to forecasts 5, 10 and 15 minutes ahead, a dashboard connects current congestion levels with predicted travel times.",
+    "overview": {
+      "title": "Project at a glance",
+      "text": "The pilot produces travel time forecasts for selected sections of the A90 and A91 motorways in the Rome area. It combines connected vehicle observations and road network information in an interactive dashboard showing congestion levels, average speeds and forecasts 5, 10 and 15 minutes ahead.",
+      "stats": [
+        {
+          "value": "2",
+          "label": "Motorway corridors in the Rome area"
+        },
+        {
+          "value": "24",
+          "label": "Months of historical traffic data"
+        },
+        {
+          "value": "500 m",
+          "label": "Length of FCD aggregation segments"
+        },
+        {
+          "value": "3",
+          "label": "Forecast horizons at 5, 10 and 15 minutes"
+        }
+      ],
+      "meta": {
+        "Area": "Rome, Italy; A90 Aurelia–Laurentina and A91 Magliana viaduct–Fiumicino Airport interchange",
+        "Period": "November 2022–October 2024",
+        "Data": "Infoblu Floating Car Data, ANAS network graph, RMT incident and roadworks data",
+        "Output": "Forecasting model and interactive dashboard"
+      }
+    },
+    "story": [
+      {
+        "icon": "challenge",
+        "label": "The challenge",
+        "title": "Anticipating changes in traffic over the next few minutes",
+        "text": "Traffic conditions vary over time and across consecutive road segments, making travel times difficult to predict. The challenge is to turn heterogeneous datasets into consistent inputs that capture traffic patterns and support short-term forecasts."
+      },
+      {
+        "icon": "analyzed",
+        "label": "What was analyzed",
+        "title": "Traffic observations and road network characteristics",
+        "text": "The analysis covers November 2022–October 2024 on selected A90 and A91 sections. It examines average speed, vehicle counts, road attributes, incidents, roadworks and weather. Coverage, anomalies and missing data inform the selection of Floating Car Data (FCD) aggregated over 500 m segments."
+      },
+      {
+        "icon": "approach",
+        "label": "Our approach",
+        "title": "From integrated observations to short-term forecasts",
+        "text": "The approach combines transport engineering, data preparation and a comparison of six Machine Learning architectures. The selected Long Short-Term Memory (LSTM) + Transformer model uses average speed and FCD vehicle count, with forecasts and performance indicators displayed in a dashboard."
+      }
+    ],
+    "data": {
+      "title": "Data sources",
+      "items": [
+        {
+          "name": "Infoblu Floating Car Data",
+          "text": "Infoblu provides average speeds and observed vehicle counts aggregated over 500 m road segments for November 2022–October 2024."
+        },
+        {
+          "name": "ANAS network graph",
+          "text": "The ANAS transport network graph provides road geometries, segment lengths, cross-section characteristics, capacity and free-flow speed."
+        },
+        {
+          "name": "RMT incident and roadworks data",
+          "text": "RMT provides records of incidents and roadworks and information on their effects on traffic."
+        },
+        {
+          "name": "Additional sources assessed",
+          "text": "PANAMA sensors, TMC traffic aggregations, municipal weather data and traffic orders provide additional observations and contextual information assessed during source selection."
+        }
+      ],
+      "deliverablesTitle": "What the product delivers",
+      "deliverables": [
+        "Travel time forecasts for 5, 10 and 15 minutes ahead support short-term traffic analysis.",
+        "An interactive dashboard combines colour-coded congestion levels, average speeds and predicted travel times.",
+        "Model performance indicators show forecast accuracy and computation times for monitoring."
+      ]
+    },
+    "methods": {
+      "title": "From raw data to the final product",
+      "text": [
+        "Traffic observations, road network attributes and contextual records are collected and checked for coverage. Infoblu FCD are selected, cleaned and spatially linked to the network graph; missing values are filled using the latest available value for each segment. Average speed and vehicle count are standardised and scaled. Six architectures are compared across 30 configurations each, using training, validation and test splits of 70%, 20% and 10%. MAPE and RMSE guide the selection of LSTM + Transformer. The dashboard displays forecasts and performance indicators.",
+        "Temporal variables, road attributes, incident counts during the preceding hour and segment adjacency are assessed alongside traffic observations. The selected model retains average speed and FCD vehicle count. PANAMA sensors are excluded from training because of their spatial distribution and gaps in data availability."
+      ],
+      "figures": [
+        {
+          "image": "images/projects/movility/anas-predictive-travel-time/anas-workflow.png",
+          "caption": "Figure 1. The workflow connects traffic and network data, data preparation, model comparison and travel time forecasting. Read the arrows in sequence to follow the processing stages."
+        }
+      ]
+    },
+    "insights": {
+      "title": "Data that drives decisions",
+      "main": {
+        "image": "images/projects/movility/anas-predictive-travel-time/anas-dashboard.png",
+        "caption": "Figure 2. The monitoring dashboard shows colour-coded traffic observations for the selected motorway sections. Read each cell using the colour scale and the selected time and road segment."
+      },
+      "charts": [],
+      "gallery": [
+        {
+          "title": "Model Training",
+          "image": "images/projects/movility/anas-predictive-travel-time/anas-model-training.png",
+          "caption": "Figure 3. The selected LSTM + Transformer architecture uses speed and vehicle count and reports MAPE of 17.63% and RMSE of 0.45. Some feature labels are in Italian."
+        },
+        {
+          "title": "Model Performance Dashboard",
+          "image": "images/projects/movility/anas-predictive-travel-time/anas-performance-dashboard.png",
+          "caption": "Figure 4. Model performance dashboard showing resource usage, computational costs and the status and duration of training and inference jobs."
+        },
+        {
+          "title": "Missing data",
+          "image": "images/projects/movility/anas-predictive-travel-time/anas-missingdata.png",
+          "caption": "Figure 5. Percentage of missing observations for each sensor across six periods."
+        }
+      ]
+    },
+    "findings": {
+      "title": "Main findings",
+      "items": [
+        {
+          "title": "Selected architecture",
+          "text": "The comparison selects LSTM + Transformer, with reported mean absolute percentage error (MAPE) of 17.63% and root mean square error (RMSE) of 0.45."
+        },
+        {
+          "title": "Final model inputs",
+          "text": "The selected model uses average speed and FCD vehicle count over 500 m segments, following assessment of additional sources and contextual variables."
+        },
+        {
+          "title": "Integrated dashboard",
+          "text": "The dashboard combines congestion levels, average speeds and travel time forecasts 5, 10 and 15 minutes ahead, alongside performance indicators."
+        },
+        {
+          "title": "Sensor coverage gaps",
+          "text": "PANAMA sensor observations are excluded from training because their spatial distribution and data availability do not support the selected modelling dataset."
+        }
+      ]
+    },
+    "results": {
+      "title": "Results that matter",
+      "items": [
+        {
+          "value": "17.63%",
+          "label": "MAPE of the selected model"
+        },
+        {
+          "value": "0.45",
+          "label": "RMSE of the selected model"
+        },
+        {
+          "value": "6",
+          "label": "Architectures compared for model selection"
+        },
+        {
+          "value": "30",
+          "label": "Configurations tested per architecture"
+        }
+      ]
+    },
+    "limits": {
+      "title": "Limitations and next steps",
+      "items": [
+        "Results cover only the selected corridors and study period. Performance on other road sections requires further assessment.",
+        "FCD represent a sample of circulating vehicles. The source reports an RMSE of 0.45 without specifying its unit or evaluation scale."
+      ],
+      "nextTitle": "Next steps",
+      "next": [
+        "Extension to a wider geographical area, assessment of model scalability.",
+        "Training of additional models for different road categories, assessment of infrastructure-specific traffic patterns."
+      ]
+    },
+    "group": "Mobility"
+  },
+  {
+    "slug": "julia-virtual-assistant",
+    "titleLight": "",
+    "titleBold": "Julia",
+    "subtitle": "Julia, the virtual assistant of Rome",
+    "summary": "The first urban generative AI: the virtual assistant of Roma Capitale, answering residents and visitors in real time with certified information.",
+    "tags": [
+      "Generative AI",
+      "Multi-agent",
+      "Roma Capitale",
+      "Smart City"
+    ],
+    "image": "images/julia_logo.png",
+    "heroText": "The virtual assistant of Roma Capitale: documents, events, transport, culture and city services, in 80+ languages, 24/7.",
+    "julia": {
+      "logo": "images/julia_logo.png",
+      "eyebrow": "Julia",
+      "title": "Julia, the virtual assistant of Rome",
+      "intro": [
+        "Julia is the virtual assistant of Roma Capitale, presented as the first urban generative AI. Whether you are living Rome during the Jubilee, dealing with everyday life or discovering hidden corners of the city, she answers in real time with up-to-date, certified information.",
+        "She guides residents and visitors through the services of Roma Capitale and the city itself: documents and procedures, events, museums, restaurants, transport and more. A single message is all it takes to start."
+      ],
+      "stats": [
+        {
+          "value": "24/7",
+          "label": "Always available"
+        },
+        {
+          "value": "80+",
+          "label": "Languages spoken"
+        },
+        {
+          "value": "5",
+          "label": "Channels to chat on"
+        },
+        {
+          "value": "3",
+          "label": "Releases: 1.0, 2.0 and 2.5"
+        }
+      ],
+      "capabilities": {
+        "title": "What you can do with Julia",
+        "items": [
+          {
+            "title": "Explore the Institutional Portal",
+            "text": "Information on services, offices, contacts and documents of the Roma Capitale portal.",
+            "tag": "New"
+          },
+          {
+            "title": "Discover the cinema programme",
+            "text": "Films, showtimes and information on the main cinemas in the capital.",
+            "tag": "New"
+          },
+          {
+            "title": "Get practical help and city services",
+            "text": "Find drinking fountains, public toilets, AMA collection centres and more.",
+            "tag": "Update"
+          },
+          {
+            "title": "Find out what to do in Rome",
+            "text": "Events, concerts, exhibitions and shows."
+          },
+          {
+            "title": "Plan your trips",
+            "text": "Public transport, directions, blue-line parking fares and ZTL zones."
+          },
+          {
+            "title": "Find the right place for you",
+            "text": "Where to eat, sleep and relax, to experience each place authentically."
+          },
+          {
+            "title": "Explore history and culture",
+            "text": "Opening hours and details on museums, monuments, attractions and study rooms."
+          },
+          {
+            "title": "Read official city and mobility news",
+            "text": "News published by Roma Capitale and Roma Servizi per la Mobilità."
+          },
+          {
+            "title": "Get health information",
+            "text": "Real-time Emergency Room waiting times and up-to-date pharmacy locations."
+          }
+        ]
+      },
+      "how": {
+        "eyebrow": "How Julia works",
+        "items": [
+          {
+            "label": "Designed to evolve",
+            "title": "Better with every release",
+            "text": "Julia's technology improves constantly, which makes her more effective, more useful and more precise with each new release."
+          },
+          {
+            "label": "Certified knowledge",
+            "title": "Every piece of data is validated first",
+            "text": "Julia does not learn everything at once: the quality of information is verified first, and each piece of data is validated and certified before it is added. Her knowledge comes from official sources."
+          },
+          {
+            "label": "Multi-agent architecture",
+            "title": "One orchestrator, many specialised agents",
+            "text": "When a chat starts, a Super Agent orchestrator coordinates several specialised agents to produce a single, complete and reliable answer."
+          }
+        ]
+      },
+      "faq": {
+        "title": "Trust, privacy and tips",
+        "items": [
+          {
+            "q": "How is my data protected?",
+            "a": "Julia complies with the General Data Protection Regulation (GDPR) and uses advanced encryption to protect personal information. No sensitive data is stored without explicit consent."
+          },
+          {
+            "q": "Can I trust the information?",
+            "a": "Julia relies on certified, up-to-date data from official Roma Capitale sources and reliable partners in tourism, mobility and culture. As with any AI, results may not be 100% certain, since they depend on the quality and completeness of the available information."
+          },
+          {
+            "q": "How does geolocation work?",
+            "a": "Julia uses your position only if you knowingly share it, and keeps it for a few minutes within the conversation. After that she asks you to share it again if you want location-based answers."
+          },
+          {
+            "q": "How does the conversation history work?",
+            "a": "History stays active only for a limited time. Once it expires, it is as if you were talking for the first time: Julia keeps no memory of previous interactions."
+          },
+          {
+            "q": "How do I get the best answers?",
+            "a": "Ask clear and precise questions, rephrase if you do not find the answer straight away, and use punctuation to separate different requests. If Julia seems stuck, write \"let's start over\" or \"change topic\"."
+          }
+        ]
+      },
+      "cta": {
+        "text": "Everything in this section comes from the official Julia website.",
+        "label": "Meet Julia",
+        "href": "https://julia.comune.roma.it/it/"
+      }
+    },
+    "group": "Mobility"
+  }
+]
