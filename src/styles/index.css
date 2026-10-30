@@ -348,3 +348,20 @@ img { display: block; max-width: 100%; }
   .home .hero--banner .hero__content,
   .home .hero--banner .navbar { max-width: min(var(--max), 100%); width: 100%; }
 }
+
+/* ---------- password gate ---------- */
+.gate {
+  min-height: 100vh; display: grid; place-items: center; padding: 24px;
+  background: var(--navy-deep);
+}
+.gate__box {
+  width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 14px;
+  background: #fff; padding: 32px; border-radius: 8px;
+}
+.gate__box h1 { font-size: 1.4rem; color: var(--navy); }
+.gate__box p { color: var(--muted); font-size: .9rem; }
+.gate__box input {
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; font: inherit;
+}
+.gate__box input[aria-invalid="true"] { border-color: var(--red); }
+.gate__error { color: var(--red); font-size: .85rem; }
