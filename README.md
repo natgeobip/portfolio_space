@@ -6,7 +6,7 @@ React + Vite + React Router. Sito statico per GitHub Pages: tutto il contenuto v
 
 ```bash
 npm install
-npm run dev      # sviluppo su http://localhost:5173/space_portfolio/
+npm run dev      # sviluppo su http://localhost:5173/portfolio_space/
 npm run build    # produce dist/
 ```
 
@@ -42,7 +42,7 @@ Foto del team: in `site.json` imposta `photo` (es. `"images/team/mario.jpg"`). I
 
 1. Push su `main`.
 2. Su GitHub: **Settings → Pages → Source: GitHub Actions**.
-3. Il workflow `.github/workflows/deploy.yml` builda e pubblica su `https://natgeobip.github.io/space_portfolio/`.
+3. Il workflow `.github/workflows/deploy.yml` builda e pubblica su `https://natgeobip.github.io/portfolio_space/`.
 
 Se rinomini il repo, aggiorna `base` in `vite.config.js` (e il percorso del favicon in `index.html`).
 Si usa `HashRouter` (URL tipo `/#/project/slug`) per evitare 404 al refresh su GitHub Pages.
