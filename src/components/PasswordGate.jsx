@@ -39,8 +39,8 @@ export default function PasswordGate({ children }) {
   return (
     <div className="gate">
       <form className="gate__box" onSubmit={handleSubmit}>
-        <h1>Private access</h1>
-        <p>Enter the password to view this site.</p>
+        <h1>BIP Space</h1>
+        <p>Enter the password to access the portfolio.</p>
         <input
           type="password"
           value={value}
