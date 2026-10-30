@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react'
 // https://natgeobip.github.io/space_portfolio/
 export default defineConfig({
   plugins: [react()],
-  base: '/space_portfolio/',
+  base: '/barcellona_portfolio/',
 })
