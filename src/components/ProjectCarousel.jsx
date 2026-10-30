@@ -4,7 +4,7 @@ import { Arrow } from './Icons.jsx'
 
 // Carosello orizzontale con scroll-snap: si scorre con le frecce, con la rotella/trackpad o trascinando (touch).
 // Le frecce spostano di una scheda alla volta e si disattivano agli estremi.
-// Se i progetti hanno un "group" (es. Space, Mobility) sopra il carosello compaiono le etichette: quella del gruppo
+// Se i progetti hanno un "group" (es. Space) sopra il carosello compaiono le etichette: quella del gruppo
 // a cui appartiene la prima scheda visibile è attiva, e cliccandola si scorre all'inizio del gruppo.
 export default function ProjectCarousel({ projects }) {
   const track = useRef(null)

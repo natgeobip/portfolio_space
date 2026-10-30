@@ -48,7 +48,7 @@ export default function ProjectDetail() {
   }
 
   const { overview, story, data, methods, insights, findings, results, limits, webgis } = p
-  // I progetti del team Mobility non usano banner/satellite né header/footer di Space.
+  // Solo i progetti del gruppo Space usano banner/satellite e header/footer di Space.
   const isSpace = p.group === 'Space'
 
   // Julia ha una struttura propria (vedi JuliaSection): hero + sezione dedicata, senza banner/satellite e footer di Space.
